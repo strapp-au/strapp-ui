@@ -7,8 +7,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.decapitalize
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.DeviceConfig
+import app.cash.paparazzi.Environment
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
+//import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.*
 import com.google.gson.Gson
 import org.junit.Rule
@@ -20,6 +22,7 @@ import java.util.*
 import kotlin.reflect.KFunction
 
 class StrappTesting(
+    private val root: StrappRoot = StrappRoot("Default", listOf()),
     private val componentName: String
 ): TestRule {
 
@@ -30,7 +33,7 @@ class StrappTesting(
             screenWidth = 1440,
             xdpi = 534,
             ydpi = 534,
-            orientation = com.android.resources.ScreenOrientation.PORTRAIT,
+            orientation = ScreenOrientation.PORTRAIT,
             density = com.android.resources.Density.DPI_560,
             ratio = com.android.resources.ScreenRatio.NOTLONG,
             size = com.android.resources.ScreenSize.NORMAL,
@@ -55,6 +58,18 @@ class StrappTesting(
         label: String = "Default",
         view: @Composable () -> Unit
     ) {
+        if (root.themes.isNotEmpty()) {
+            root.themes.forEach {
+                snapView(label,
+                    { it(content = view) }
+                )
+            }
+        } else {
+            snapView(label, view)
+        }
+    }
+
+    private fun snapView(label: String, view: @Composable () -> Unit) {
         paparazzi.inflate<SnapshotHostView>(R.layout.frame).let { root ->
             root.findViewById<ComposeView>(R.id.compose_frame).apply {
                 setContent {
@@ -63,7 +78,8 @@ class StrappTesting(
                     }
                 }
             }
-            val fileName = "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+            val fileName =
+                "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
             paparazzi.snapshot(
                 view = root,
                 name = fileName
@@ -84,6 +100,7 @@ class StrappTesting(
                                 component?.snaps?.let { this.addAll(it) }
                                 this.removeIf { it.label == label }
                                 this.add(
+                                    0,
                                     StrappSnap(
                                         label = label,
                                         snap = "$snapDir/$fileName.png"

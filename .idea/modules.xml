@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StrappUI.iml" filepath="$PROJECT_DIR$/.idea/modules/StrappUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/StrappUI.android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/StrappUI.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/StrappUI.android.paparazzi.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/StrappUI.android.paparazzi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidAndroidTestRelease.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidAndroidTestRelease.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixtures.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixtures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixturesDebug.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixturesDebug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixturesRelease.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.androidTestFixturesRelease.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.commonMain.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.commonMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.commonTest.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.commonTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosArm64Main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosArm64Main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosArm64Test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosArm64Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosMain.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosSimulatorArm64Main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosSimulatorArm64Main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosSimulatorArm64Test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosSimulatorArm64Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosTest.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosX64Main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosX64Main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosX64Test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/StrappUI.shared.iosX64Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-parent.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/paparazzi-parent.libs.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/paparazzi-parent.libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/layoutlib/paparazzi-parent.libs.layoutlib.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/layoutlib/paparazzi-parent.libs.layoutlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-linux/paparazzi-parent.libs.native-linux.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-linux/paparazzi-parent.libs.native-linux.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-macarm/paparazzi-parent.libs.native-macarm.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-macarm/paparazzi-parent.libs.native-macarm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-macosx/paparazzi-parent.libs.native-macosx.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-macosx/paparazzi-parent.libs.native-macosx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-win/paparazzi-parent.libs.native-win.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/libs/native-win/paparazzi-parent.libs.native-win.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi/paparazzi-parent.paparazzi.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi/paparazzi-parent.paparazzi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-agent/paparazzi-parent.paparazzi-agent.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-agent/paparazzi-parent.paparazzi-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-gradle-plugin/paparazzi-parent.paparazzi-gradle-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/paparazzi-gradle-plugin/paparazzi-parent.paparazzi-gradle-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/paparazzi/sample/paparazzi-parent.sample.iml" filepath="$PROJECT_DIR$/.idea/modules/android/paparazzi/sample/paparazzi-parent.sample.iml" />
+    </modules>
+  </component>
+</project>

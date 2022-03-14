@@ -184,6 +184,10 @@ class PaparazziPlugin : Plugin<Project> {
         dependencies.create("app.cash.paparazzi:paparazzi:$VERSION")
     )
 
+    configurations.getByName("implementation").dependencies.add(
+      dependencies.create("app.cash.paparazzi:paparazzi:$VERSION")
+    )
+
     val unzipConfiguration = configurations.create("unzip")
     unzipConfiguration.attributes.attribute(
         ArtifactAttributes.ARTIFACT_FORMAT, ArtifactTypeDefinition.DIRECTORY_TYPE

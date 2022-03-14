@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 31
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
+        minSdk = 24
+        targetSdk = 31
 
         buildConfigField("String", "PROJECT_DIR", "\"${project.rootDir.absolutePath}\"")
 
@@ -42,7 +42,9 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-//    implementation(project(":android:paparazzi"))
+//    implementation(project(":android:paparazzi:paparazzi"))
+
+    implementation("com.google.code.gson:gson:2.9.0")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
     implementation("androidx.savedstate:savedstate-ktx:1.1.0")
