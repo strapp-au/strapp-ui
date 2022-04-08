@@ -147,9 +147,9 @@ subprojects {
       }
     }
 
-    mavenPublish {
-      releaseSigningEnabled = hasProperty('signingKey')
-    }
+//    mavenPublish {
+//      releaseSigningEnabled = hasProperty('signingKey')
+//    }
   }
 
   tasks.register('emptySourcesJar', Jar) {

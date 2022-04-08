@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+//    implementation(project(":shared"))
 //    implementation(project(":android:paparazzi:paparazzi"))
 
     implementation("com.google.code.gson:gson:2.9.0")

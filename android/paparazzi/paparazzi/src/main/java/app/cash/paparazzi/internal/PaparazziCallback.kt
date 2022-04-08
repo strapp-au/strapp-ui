@@ -70,10 +70,15 @@ internal class PaparazziCallback(
           val type = field.type
           try {
             if (type == Int::class.javaPrimitiveType) {
-              val value = field.get(null) as Int
-              val reference = ResourceReference(RES_AUTO, resourceType, field.name)
-              projectResources[value] = reference
-              resources[reference] = value
+              try {
+                (field.get(null) as? Int)?.let { value ->
+                  val reference = ResourceReference(RES_AUTO, resourceType, field.name)
+                  projectResources[value] = reference
+                  resources[reference] = value
+                }
+              } catch (e: Throwable) {
+                logger.error(e, "Malformed R class: %1\$s", "$rPackageName.R")
+              }
             } else if (type.isArray && type.componentType == Int::class.javaPrimitiveType) {
               // Ignore.
             } else {
