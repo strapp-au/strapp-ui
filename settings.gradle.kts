@@ -8,6 +8,7 @@ pluginManagement {
 
 rootProject.name = "StrappUI"
 include(":android")
+project(":android").name = "strapp-ui"
 include(":shared")
 include(":StrappPlugin")
 

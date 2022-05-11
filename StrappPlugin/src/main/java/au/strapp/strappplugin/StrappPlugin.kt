@@ -1,5 +1,6 @@
 package au.strapp.strappplugin
 
+import app.cash.paparazzi.gradle.PaparazziPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
@@ -14,7 +15,8 @@ class StrappPlugin : Plugin<Project> {
         }
 
         project.plugins.withId("com.android.library") {
-            project.pluginManager.apply("app.cash.paparazzi")
+            PaparazziPlugin().apply(project)
+//            project.pluginManager.apply("app.cash.paparazzi")
         }
 
 //        project.tasks.all { test ->

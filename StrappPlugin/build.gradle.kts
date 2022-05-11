@@ -6,12 +6,14 @@ plugins {
 }
 
 val pluginVersion = "0.1.0"
+val pluginDescription = "Take snapshots of your native mobile UI and see them in one place."
 
 group = "au.strapp"
 version = pluginVersion
 
 pluginBundle {
     website = "https://strapp.au"
+    description = pluginDescription
     vcsUrl = "https://github.com/strapp-au/strapp-ui"
     tags = listOf("developer", "tool", "android", "ios", "snapshot", "test")
 }
@@ -21,7 +23,7 @@ gradlePlugin {
         create("strapp") {
             id = "au.strapp.strapp-ui"
             displayName = "StrappUI"
-            description = "Build native mobile apps with clarity"
+            description = pluginDescription
             implementationClass = "au.strapp.strappplugin.StrappPlugin"
             version = pluginVersion
         }
@@ -34,6 +36,7 @@ publishing {
             groupId = "au.strapp"
             artifactId = "strapp-ui"
             version = pluginVersion
+            description = pluginDescription
 
             from(components["java"])
         }

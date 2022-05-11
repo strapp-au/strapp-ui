@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.ComposeView
 import app.cash.paparazzi.Environment
 import app.cash.paparazzi.Paparazzi
+import au.strapp.strappui.BuildConfig
+import au.strapp.strappui.R
 import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.*
 import com.google.gson.Gson
