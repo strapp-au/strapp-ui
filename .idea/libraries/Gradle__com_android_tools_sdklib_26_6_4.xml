@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.6.4/21120a07beed3d2049a470bd855e14fb8781a643/sdklib-26.6.4.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.6.4/6b3eb38a4aee6ea60f80cadf234c14848825c5f3/sdklib-26.6.4-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.6.4/d689abc9e020aed341703265a3b93c71c36b6069/sdklib-26.6.4-sources.jar!/" />
     </SOURCES>

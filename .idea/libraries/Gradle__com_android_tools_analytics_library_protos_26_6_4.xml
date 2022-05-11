@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.6.4/bddebbb22ee397af032087eceeecfec28d7fe8f5/protos-26.6.4.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.6.4/69f0e68f7ba9ce21105465b272a640c0e9e6d3fb/protos-26.6.4-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/protos/26.6.4/d372cce3e87c8ab4990eb150a51c71bd4b4ca63/protos-26.6.4-sources.jar!/" />
     </SOURCES>

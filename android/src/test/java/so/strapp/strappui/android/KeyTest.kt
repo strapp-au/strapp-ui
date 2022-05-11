@@ -12,7 +12,9 @@ import so.strapp.strappui.android.StrappTesting
 class KeyTest {
 
     @get:Rule
-    val strapp = StrappTesting(componentName = "Key")
+    val strapp = StrappTesting(
+        componentName = "Key"
+    )
 
     @Composable
     fun Key() {

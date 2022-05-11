@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.6.4/cb807193b7ceb019b0f118d02b9aa1600abdaf31/ddmlib-26.6.4.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.6.4/e95c409ade0afc0aecd544afafaa2c56d7080203/ddmlib-26.6.4-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.ddms/ddmlib/26.6.4/a941603f38194f428f93a52d7bfadfc9f56c5f31/ddmlib-26.6.4-sources.jar!/" />
     </SOURCES>

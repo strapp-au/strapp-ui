@@ -2,7 +2,11 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
-      <module name="paparazzi-parent.paparazzi" target="1.8" />
+      <module name="paparazzi-parent.paparazzi-agent" target="11" />
+      <module name="paparazzi-parent.paparazzi-gradle-plugin" target="11" />
+      <module name="paparazzi-parent.sample" target="11" />
+      <module name="StrappUI.android.paparazzi.paparazzi-agent" target="11" />
+      <module name="StrappUI.paparazzi.paparazzi-agent" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

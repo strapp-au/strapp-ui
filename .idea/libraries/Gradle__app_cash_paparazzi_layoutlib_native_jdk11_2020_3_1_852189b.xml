@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.cash.paparazzi/layoutlib-native-jdk11/2020.3.1-852189b/13849f7f0cd4d9afb62bc5b912e41536cf6f49d3/layoutlib-native-jdk11-2020.3.1-852189b.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.cash.paparazzi/layoutlib-native-jdk11/2020.3.1-852189b/1c7c3d1747af2f442890e374add23e8e03c1d15a/layoutlib-native-jdk11-2020.3.1-852189b-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/app.cash.paparazzi/layoutlib-native-jdk11/2020.3.1-852189b/1c7c3d1747af2f442890e374add23e8e03c1d15a/layoutlib-native-jdk11-2020.3.1-852189b-sources.jar!/" />
     </SOURCES>
