@@ -1,28 +1,26 @@
 package so.strapp.strappui.android
 
-import androidx.compose.foundation.layout.size
+import android.graphics.Bitmap
+import android.view.LayoutInflater
+import android.view.View
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.decapitalize
-import androidx.compose.ui.unit.dp
-import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Environment
 import app.cash.paparazzi.Paparazzi
 import com.android.ide.common.rendering.api.SessionParams
-//import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.*
 import com.google.gson.Gson
-import org.junit.Rule
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import java.io.File
 import java.util.*
-import kotlin.reflect.KFunction
 
 class StrappTesting(
-    private val root: StrappRoot = StrappRoot("Default", listOf()),
+    private val root: Strapp = Strapp("Default", listOf({ content -> MaterialTheme(content = content) })),
     private val componentName: String
 ): TestRule {
 
@@ -46,8 +44,10 @@ class StrappTesting(
         ),
         theme = "android:Theme.Material.Light.NoActionBar.Fullscreen",
         renderingMode = SessionParams.RenderingMode.SHRINK,
-        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
+//        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
     )
+
+//    private val composeRule = createComposeRule()
 
     @Composable
     fun TestView(view: @Composable (() -> Unit)?) {
@@ -56,20 +56,33 @@ class StrappTesting(
 
     fun snap(
         label: String = "Default",
-        view: @Composable () -> Unit
+        layout: Int,
+        bind: (view: View) -> View
     ) {
-        if (root.themes.isNotEmpty()) {
-            root.themes.forEach {
-                snapView(label,
-                    { it(content = view) }
-                )
-            }
-        } else {
-            snapView(label, view)
+        snapView(label, layout, bind)
+    }
+
+    fun getInflater(): LayoutInflater {
+        return paparazzi.layoutInflater
+    }
+
+    val context get() = paparazzi.context
+
+    private fun snapView(label: String, layout: Int, bind: (view: View) -> View) {
+        paparazzi.inflate<View>(layout).let { root ->
+            snap(label, bind(root))
         }
     }
 
     private fun snapView(label: String, view: @Composable () -> Unit) {
+//        composeRule.setContent {
+//            view()
+//        }
+//        snap(label, composeRule.onRoot())
+//        val fileName =
+//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+//        val file = File()
+//        val image = composeRule.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100)
         paparazzi.inflate<SnapshotHostView>(R.layout.frame).let { root ->
             root.findViewById<ComposeView>(R.id.compose_frame).apply {
                 setContent {
@@ -78,41 +91,95 @@ class StrappTesting(
                     }
                 }
             }
-            val fileName =
-                "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-            paparazzi.snapshot(
-                view = root,
-                name = fileName
-            )
-            val c = config
-            updateConfig(StrappConfig(
-                components = StrappComponents(
-                    ios = c.components.ios,
-                    android = arrayListOf<StrappComponent>().apply {
-                        this.addAll(c.components.android)
-                        val component = this.find {
-                            it.name == componentName
-                        }
-                        this.removeIf { it.name == componentName }
-                        this.add(StrappComponent(
-                            name = componentName,
-                            snaps = arrayListOf<StrappSnap>().apply {
-                                component?.snaps?.let { this.addAll(it) }
-                                this.removeIf { it.label == label }
-                                this.add(
-                                    0,
-                                    StrappSnap(
-                                        label = label,
-                                        snap = "$snapDir/$fileName.png"
-                                    )
-                                )
-                            }
-                        ))
-                        this.sortBy { it.name }
-                    }
-                )
-            ))
+            snap(label, root)
         }
+    }
+
+    fun snap(
+        label: String = "Default",
+        composable: @Composable () -> Unit
+    ) {
+//        if (root.themes.isNotEmpty()) {
+//            root.themes.forEach {
+//                snapView(label,
+//                    { it(content = view) }
+//                )
+//            }
+//        } else {
+//            snapView(label, view)
+//        }
+
+        val fileName =
+            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+        paparazzi.snapshot(
+            name = fileName,
+            composable = composable
+        )
+        val c = config
+        updateConfig(StrappConfig(
+            components = StrappComponents(
+                ios = c.components.ios,
+                android = arrayListOf<StrappComponent>().apply {
+                    this.addAll(c.components.android)
+                    val component = this.find {
+                        it.name == componentName
+                    }
+                    this.removeIf { it.name == componentName }
+                    this.add(StrappComponent(
+                        name = componentName,
+                        snaps = arrayListOf<StrappSnap>().apply {
+                            component?.snaps?.let { this.addAll(it) }
+                            this.removeIf { it.label == label }
+                            this.add(
+                                0,
+                                StrappSnap(
+                                    label = label,
+                                    snap = "$snapDir/$fileName.png"
+                                )
+                            )
+                        }
+                    ))
+                    this.sortBy { it.name }
+                }
+            )
+        ))
+    }
+
+    fun snap(label: String, view: View) {
+        val fileName =
+            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+        paparazzi.snapshot(
+            view = view,
+            name = fileName
+        )
+        val c = config
+        updateConfig(StrappConfig(
+            components = StrappComponents(
+                ios = c.components.ios,
+                android = arrayListOf<StrappComponent>().apply {
+                    this.addAll(c.components.android)
+                    val component = this.find {
+                        it.name == componentName
+                    }
+                    this.removeIf { it.name == componentName }
+                    this.add(StrappComponent(
+                        name = componentName,
+                        snaps = arrayListOf<StrappSnap>().apply {
+                            component?.snaps?.let { this.addAll(it) }
+                            this.removeIf { it.label == label }
+                            this.add(
+                                0,
+                                StrappSnap(
+                                    label = label,
+                                    snap = "$snapDir/$fileName.png"
+                                )
+                            )
+                        }
+                    ))
+                    this.sortBy { it.name }
+                }
+            )
+        ))
     }
 
     data class StrappConfig(
@@ -137,7 +204,7 @@ class StrappTesting(
     private val gson = Gson()
 
     private val projectDir = BuildConfig.PROJECT_DIR
-    private val snapDir = "${projectDir}/.strapp/snaps/android"
+    private val snapDir = "${projectDir}/.strapp/snapshots/android/images"
     private val configPath = "$projectDir/.strapp/config.json"
 
     private val config: StrappConfig get() =
@@ -157,6 +224,14 @@ class StrappTesting(
             this.createNewFile()
             this.writeText(gson.toJson(config))
         }
+    }
+
+    fun prepare(description: Description) {
+        paparazzi.prepare(description)
+    }
+
+    fun close() {
+        paparazzi.close()
     }
 
     override fun apply(base: Statement, description: Description): Statement {

@@ -3,7 +3,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/common/27.2.2/9069c225933d5ea4dc34c747c28215ff927176b/common-27.2.2.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/common/27.2.2/81b08d6534014288ba98cdd1f39da0a2108b7663/common-27.2.2-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/common/27.2.2/c428312d6362f28a963682c87b1ae97237df90a5/common-27.2.2-sources.jar!/" />
     </SOURCES>

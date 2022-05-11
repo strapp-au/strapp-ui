@@ -4,45 +4,16 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT">
-            <builds>
-              <build path="$PROJECT_DIR$/android/paparazzi" name="paparazzi-parent">
-                <projects>
-                  <project path="$PROJECT_DIR$/android/paparazzi" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs/layoutlib" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs/native-linux" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs/native-macarm" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs/native-macosx" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/libs/native-win" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/paparazzi" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/paparazzi-agent" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/paparazzi-gradle-plugin" />
-                  <project path="$PROJECT_DIR$/android/paparazzi/sample" />
-                </projects>
-              </build>
-            </builds>
-          </compositeBuild>
-        </compositeConfiguration>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/../paparazzi" />
+            <option value="$PROJECT_DIR$/../paparazzi/paparazzi-gradle-plugin" />
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/StrappPlugin" />
             <option value="$PROJECT_DIR$/android" />
-            <option value="$PROJECT_DIR$/android/paparazzi" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs/layoutlib" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs/native-linux" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs/native-macarm" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs/native-macosx" />
-            <option value="$PROJECT_DIR$/android/paparazzi/libs/native-win" />
-            <option value="$PROJECT_DIR$/android/paparazzi/paparazzi" />
-            <option value="$PROJECT_DIR$/android/paparazzi/paparazzi-agent" />
-            <option value="$PROJECT_DIR$/android/paparazzi/paparazzi-gradle-plugin" />
-            <option value="$PROJECT_DIR$/android/paparazzi/sample" />
             <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>

@@ -11,8 +11,8 @@
           <sourceSet>StrappUI.shared.commonTest</sourceSet>
           <sourceSet>StrappUI.shared.iosTest</sourceSet>
           <sourceSet>StrappUI.shared.iosSimulatorArm64Main</sourceSet>
-          <sourceSet>StrappUI.shared.iosMain</sourceSet>
           <sourceSet>StrappUI.shared.commonMain</sourceSet>
+          <sourceSet>StrappUI.shared.iosMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <compilerSettings />
