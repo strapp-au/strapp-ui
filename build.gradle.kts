@@ -17,6 +17,8 @@ buildscript {
     }
 }
 
+ext["kotlin_version"] = "1.6.10"
+
 allprojects {
     repositories {
         google()
