@@ -105,6 +105,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 
-    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+//    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+    implementation(project(":paparazzi:paparazzi"))
+    implementation(project(":paparazzi:paparazzi-agent"))
+
+
 
 }

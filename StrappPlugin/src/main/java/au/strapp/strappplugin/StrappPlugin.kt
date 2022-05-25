@@ -3,6 +3,7 @@ package au.strapp.strappplugin
 import app.cash.paparazzi.gradle.PaparazziPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.repositories.ArtifactRepository
 import org.gradle.api.tasks.testing.Test
 
 @Suppress("unused")
@@ -14,7 +15,9 @@ class StrappPlugin : Plugin<Project> {
             }
         }
 
+
         project.plugins.withId("com.android.library") {
+            addTestDependencies(project)
             PaparazziPlugin().apply(project)
 //            project.pluginManager.apply("app.cash.paparazzi")
         }
@@ -24,5 +27,17 @@ class StrappPlugin : Plugin<Project> {
 //                test.systemProperties["paparazzi.test.rootDirectory"] = project.rootProject.rootDir.absolutePath + "/.strapp/snapshots/android"
 //        }
 
+    }
+
+    private fun addTestDependencies(project: Project) {
+        project.repositories.maven { repo ->
+            repo.setUrl("https://jitpack.io")
+//            repo.metadataSources { sources ->
+//                sources.artifact()
+//            }
+        }
+        project.configurations.getByName("testImplementation").dependencies.add(
+            project.dependencies.create("com.github.strapp-au:strapp-ui:initial-setup-4a200c961f-1")
+        )
     }
 }
