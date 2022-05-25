@@ -13,7 +13,7 @@ include(":shared")
 include(":StrappPlugin")
 
 include(":paparazzi")
-project(":paparazzi").projectDir = file("../paparazzi")
+project(":paparazzi").projectDir = file("third-party/paparazzi")
 include(":paparazzi:paparazzi")
 include(":paparazzi:paparazzi-agent")
 include(":paparazzi:paparazzi-gradle-plugin")

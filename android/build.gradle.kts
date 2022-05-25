@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
 }
 
-val libVersion = "0.1.0"
+val libVersion = "0.1.1"
 
 group = "com.github.strapp-au"
 version = libVersion
