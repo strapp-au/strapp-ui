@@ -1,4 +1,5 @@
 jdk:
   - openjdk11
 install:
+  - git submodule update --recursive --init
   - ./gradlew strapp-ui:publishToMavenLocal
