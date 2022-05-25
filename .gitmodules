@@ -1,0 +1,3 @@
+[submodule "third-party/paparazzi"]
+	path = third-party/paparazzi
+	url = git@github.com:strapp-au/paparazzi.git
