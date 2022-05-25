@@ -1,19 +1,13 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-//    id("app.cash.paparazzi")
-
+    id("maven-publish")
 }
 
+val libVersion = "0.1.0"
 
-//gradlePlugin {
-//    plugins {
-//        create("strapp") {
-//            id = "au.strapp.strapp-ui"
-//            implementationClass = "app.cash.paparazzi.gradle.PaparazziPlugin"
-//        }
-//    }
-//}
+group = "com.github.strapp-au"
+version = libVersion
 
 android {
     compileSdk = 30
@@ -48,6 +42,30 @@ android {
     composeOptions {
         kotlinCompilerVersion = "1.6.10"
         kotlinCompilerExtensionVersion = "1.1.0-rc03"
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.strapp-au"
+                artifactId = "strapp-ui"
+                version = libVersion
+                description = libVersion
+
+                from(components["release"])
+            }
+            create<MavenPublication>("debug") {
+                from(components["debug"])
+            }
+        }
+        // note repositories goes under publishing
+        repositories {
+            maven {
+//                url = "file://$projectDir/deploy"
+            }
+        }
     }
 }
 
@@ -87,6 +105,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 
-    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+//    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+    implementation(project(":paparazzi:paparazzi"))
+    implementation(project(":paparazzi:paparazzi-agent"))
+
+
 
 }

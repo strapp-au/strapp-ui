@@ -5,7 +5,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.18.0"
 }
 
-val pluginVersion = "0.1.0"
+val pluginVersion = "0.1.1"
 val pluginDescription = "Take snapshots of your native mobile UI and see them in one place."
 
 group = "au.strapp"
@@ -44,7 +44,14 @@ publishing {
 }
 
 dependencies {
-    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+//    implementation("app.cash.paparazzi:paparazzi:0.9.3")
+    implementation(project(":paparazzi:paparazzi"))
     implementation(project(":paparazzi:paparazzi-gradle-plugin"))
 
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

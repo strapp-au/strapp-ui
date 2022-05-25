@@ -18,6 +18,11 @@ buildscript {
 }
 
 allprojects {
+
+    ext {
+        set("kotlin_version", "1.6.10")
+    }
+
     repositories {
         google()
         mavenCentral()

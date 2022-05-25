@@ -10,8 +10,6 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.ComposeView
 import app.cash.paparazzi.Environment
 import app.cash.paparazzi.Paparazzi
-import au.strapp.strappui.BuildConfig
-import au.strapp.strappui.R
 import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.*
 import com.google.gson.Gson
@@ -108,43 +106,43 @@ class StrappTesting(
 //                )
 //            }
 //        } else {
-//            snapView(label, view)
+            snapView(label, composable)
 //        }
 
-        val fileName =
-            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-        paparazzi.snapshot(
-            name = fileName,
-            composable = composable
-        )
-        val c = config
-        updateConfig(StrappConfig(
-            components = StrappComponents(
-                ios = c.components.ios,
-                android = arrayListOf<StrappComponent>().apply {
-                    this.addAll(c.components.android)
-                    val component = this.find {
-                        it.name == componentName
-                    }
-                    this.removeIf { it.name == componentName }
-                    this.add(StrappComponent(
-                        name = componentName,
-                        snaps = arrayListOf<StrappSnap>().apply {
-                            component?.snaps?.let { this.addAll(it) }
-                            this.removeIf { it.label == label }
-                            this.add(
-                                0,
-                                StrappSnap(
-                                    label = label,
-                                    snap = "$snapDir/$fileName.png"
-                                )
-                            )
-                        }
-                    ))
-                    this.sortBy { it.name }
-                }
-            )
-        ))
+//        val fileName =
+//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+//        paparazzi.snapshot(
+//            name = fileName,
+//            composable = composable
+//        )
+//        val c = config
+//        updateConfig(StrappConfig(
+//            components = StrappComponents(
+//                ios = c.components.ios,
+//                android = arrayListOf<StrappComponent>().apply {
+//                    this.addAll(c.components.android)
+//                    val component = this.find {
+//                        it.name == componentName
+//                    }
+//                    this.removeIf { it.name == componentName }
+//                    this.add(StrappComponent(
+//                        name = componentName,
+//                        snaps = arrayListOf<StrappSnap>().apply {
+//                            component?.snaps?.let { this.addAll(it) }
+//                            this.removeIf { it.label == label }
+//                            this.add(
+//                                0,
+//                                StrappSnap(
+//                                    label = label,
+//                                    snap = "$snapDir/$fileName.png"
+//                                )
+//                            )
+//                        }
+//                    ))
+//                    this.sortBy { it.name }
+//                }
+//            )
+//        ))
     }
 
     fun snap(label: String, view: View) {
