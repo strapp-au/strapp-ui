@@ -8,14 +8,14 @@ import Foundation
 import SwiftUI
 
 
-class StrappTesting {
+public class StrappTesting {
     let componentName: String
     let projectDir = ProcessInfo.processInfo.environment["PROJECT_DIR"]
     fileprivate var packageRootPath = URL(fileURLWithPath: #filePath)
     let snapshotDirectory: URL?
     let configUrl: URL?
     
-    init(componentName: String) {
+    public init(componentName: String) {
         self.componentName = componentName
         if projectDir != nil {
             self.snapshotDirectory = URL(string: projectDir! + "/.strapp/snaps/ios")
@@ -38,7 +38,7 @@ class StrappTesting {
         }
     }
     
-    func snap<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
+    public func snap<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
         print(snapshotDirectory!.absoluteString)
         assert(snapshotDirectory != nil)
         if snapshotDirectory != nil {
@@ -129,7 +129,7 @@ class StrappTesting {
 }
 
 extension UIViewController {
-    func snapshot(width: CGFloat, height: CGFloat) -> UIImage {
+    public func snapshot(width: CGFloat, height: CGFloat) -> UIImage {
         let intrinsicBounds = view?.intrinsicContentSize
         let targetSize = CGSize(width: width / 3, height: intrinsicBounds!.height)// height / 3))
         view?.bounds = CGRect(origin: .zero, size: targetSize)
@@ -144,7 +144,7 @@ extension UIViewController {
 }
 
 extension SwiftUI.View {
-    func toVC(width: CGFloat, height: CGFloat) -> UIViewController {
+    public func toVC(width: CGFloat, height: CGFloat) -> UIViewController {
         let controller = UIHostingController(rootView: self)
         let view = controller.view
         let intrinsicBounds = view?.intrinsicContentSize
@@ -153,7 +153,7 @@ extension SwiftUI.View {
         return controller
     }
     
-    func snapshot() -> UIImage {
+    public func snapshot() -> UIImage {
         let controller = UIHostingController(rootView: self)
         let view = controller.view
 
