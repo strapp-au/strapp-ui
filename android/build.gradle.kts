@@ -92,7 +92,7 @@ dependencies {
     val compose_version = "1.1.0"
     testImplementation("androidx.test:core:1.4.0")
     implementation("androidx.compose.ui:ui:$compose_version")
-    // Tooling support (Previews, etc.)
+    // Tooling  support (Previews, etc.)
     implementation("androidx.compose.ui:ui-tooling:$compose_version")
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
     implementation("androidx.compose.foundation:foundation:$compose_version")
