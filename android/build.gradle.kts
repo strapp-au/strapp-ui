@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
 }
 
-val libVersion = "0.1.1"
+val libVersion = ext.get("strapp_version") as String
 
 group = "com.github.strapp-au"
 version = libVersion

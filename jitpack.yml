@@ -3,3 +3,4 @@ jdk:
 install:
   - git submodule update --recursive --init
   - ./gradlew strapp-ui:publishToMavenLocal
+  - ./gradlew StrappPlugin:publishToMavenLocal

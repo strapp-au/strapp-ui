@@ -21,6 +21,7 @@ allprojects {
 
     ext {
         set("kotlin_version", "1.6.10")
+        set("strapp_version", "0.1.12")
     }
 
     repositories {
