@@ -23,7 +23,8 @@ To run the local server after building
 strapp run 
 ```
 
-### Android
+
+## Android
 Apply the strapp-ui gradle plugin
 ```
 plugins {
@@ -60,7 +61,8 @@ In terminal within your project root directory run;
 `strapp build` to take your snapshots and prepare the local data,
 `strapp run` to run to local server - accessible at http://localhost:3001
 
-### iOS 
+
+## iOS 
 Add this git repository as a Swift package in your iOS project
 In XCode: File -> Add packages...
 ```
@@ -95,6 +97,16 @@ ios:
   OS: 15.4
 ```
 
+Set a PROJECT_DIR environment variable to your local path for the repository;
+
+In XCode; Scheme -> Edit scheme... -> Test -> Arguments -> Environment Variables
+
+`PROJECT_DIR` | `/Users/myuser/path/to/project`
+
 In terminal within your project root directory run;
+
 `strapp build` to take your snapshots and prepare the local data,
+
 `strapp run` to run to local server - accessible at http://localhost:3001
+
+
