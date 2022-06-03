@@ -48,5 +48,53 @@ Jetpack Compose
     }
 ```
 
+Add a `strapp.yml` file to your project root directory.
+```
+version: 0.1
+
+android:
+  module: app:components
+```
+
+In terminal within your project root directory run;
+`strapp build` to take your snapshots and prepare the local data,
+`strapp run` to run to local server - accessible at http://localhost:3001
+
 ### iOS 
-iOS Swift package coming soon...
+Add this git repository as a Swift package in your iOS project
+In XCode: File -> Add packages...
+```
+git@github.com:strapp-au/strapp-ui.git
+```
+
+Now you can add a unit test for each UI component state which you would like to take snapshots of.
+```
+@testable import StrappUI
+
+class MyButtonTest: XCTestCase {
+    
+    let strapp = StrappTesting(componentName: "My Button")
+    
+    func testMyButtonDefault() throws {
+        try strapp.snap(label: "Default") {
+          MyButton(text: "Testing")
+        }
+    }
+}
+```
+
+Add a `strapp.yml` file to your project root directory.
+```
+version: 0.1
+
+ios:
+  project: StrappExample.xcodeproj
+  scheme: StrappExample
+  target: StrappExampleTests
+  simulator: iPhone 13 Pro
+  OS: 15.4
+```
+
+In terminal within your project root directory run;
+`strapp build` to take your snapshots and prepare the local data,
+`strapp run` to run to local server - accessible at http://localhost:3001
