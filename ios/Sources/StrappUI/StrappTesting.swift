@@ -10,7 +10,7 @@ import SwiftUI
 
 public class StrappTesting {
     let componentName: String
-    let projectDir = ProcessInfo.processInfo.environment["PROJECT_DIR"]
+    let projectDir = FileManager().currentDirectoryPath //ProcessInfo.processInfo.environment["PROJECT_DIR"]
     fileprivate var packageRootPath = URL(fileURLWithPath: #filePath)
     let snapshotDirectory: URL?
     let configUrl: URL?
