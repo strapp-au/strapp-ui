@@ -31,13 +31,18 @@ class StrappPlugin : Plugin<Project> {
 
     private fun addTestDependencies(project: Project) {
         project.repositories.maven { repo ->
-            repo.setUrl("https://jitpack.io")
+            repo.credentials {
+                it.username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                it.password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+            repo.setUrl("https://maven.pkg.github.com/strapp-au/strapp-ui")
+            repo.name = "Strapp Github Packages"
 //            repo.metadataSources { sources ->
 //                sources.artifact()
 //            }
         }
         project.configurations.getByName("testImplementation").dependencies.add(
-            project.dependencies.create("com.github.strapp-au:strapp-ui:0.1.1")
+            project.dependencies.create("com.github.strapp-au:strapp-ui:0.1.17")
         )
     }
 }

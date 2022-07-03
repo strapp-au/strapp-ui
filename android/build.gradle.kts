@@ -1,3 +1,7 @@
+repositories {
+    mavenLocal()
+}
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -8,6 +12,18 @@ val libVersion = ext.get("strapp_version") as String
 
 group = "com.github.strapp-au"
 version = libVersion
+
+repositories {
+    mavenLocal()
+    maven {
+        name = "Strapp Github Packages"
+        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
+        credentials {
+            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+        }
+    }
+}
 
 android {
     compileSdk = 30
@@ -46,31 +62,52 @@ android {
 }
 
 afterEvaluate {
+//    publishing {
+//        publications {
+//            create<MavenPublication>("release") {
+//                groupId = "com.github.strapp-au"
+//                artifactId = "strapp-ui"
+//                version = libVersion
+//                description = libVersion
+//
+//                from(components["release"])
+//            }
+//            create<MavenPublication>("debug") {
+//                from(components["debug"])
+//            }
+//        }
+//        // note repositories goes under publishing
+//        repositories {
+//            maven {
+////                url = "file://$projectDir/deploy"
+//            }
+//        }
+//    }
     publishing {
-        publications {
-            create<MavenPublication>("release") {
-                groupId = "com.github.strapp-au"
-                artifactId = "strapp-ui"
-                version = libVersion
-                description = libVersion
-
-                from(components["release"])
-            }
-            create<MavenPublication>("debug") {
-                from(components["debug"])
-            }
-        }
-        // note repositories goes under publishing
         repositories {
             maven {
-//                url = "file://$projectDir/deploy"
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
+                credentials {
+                    username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                }
+            }
+        }
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
             }
         }
     }
 }
 
+
+
 dependencies {
 //    implementation(project(":shared"))
+
+//    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.jar"))))
 
     implementation("com.google.code.gson:gson:2.9.0")
 
@@ -105,9 +142,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 
-//    implementation("app.cash.paparazzi:paparazzi:0.9.3")
-    implementation(project(":paparazzi:paparazzi"))
-    implementation(project(":paparazzi:paparazzi-agent"))
+    implementation("app.cash.paparazzi:paparazzi:strapp-1-1.0.0")
+    implementation("app.cash.paparazzi:paparazzi-agent:strapp-1-1.0.0")
 
 
 
