@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 repositories {
     mavenLocal()
 }
@@ -89,8 +91,8 @@ afterEvaluate {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
                 credentials {
-                    username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                    password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                    username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
                 }
             }
         }
@@ -102,7 +104,11 @@ afterEvaluate {
     }
 }
 
-
+fun getLocalProperty(prop: String): String {
+    val properties = Properties()
+    properties.load(File(rootDir.absolutePath + "/local.properties").inputStream())
+    return properties.getProperty(prop, "")
+}
 
 dependencies {
 //    implementation(project(":shared"))
