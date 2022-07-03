@@ -2,5 +2,8 @@ jdk:
   - openjdk11
 install:
   - git submodule update --recursive --init
+  - ./gradlew paparazzi:paparazzi:publishToMavenLocal
+  - ./gradlew paparazzi:paparazzi-gradle-plugin:publishToMavenLocal
+  - ./gradlew paparazzi:paparazzi-agent:publishToMavenLocal
   - ./gradlew strapp-ui:publishToMavenLocal
   - ./gradlew StrappPlugin:publishToMavenLocal

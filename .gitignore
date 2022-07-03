@@ -30,3 +30,5 @@ shared/build/*
 .build
 .swiftpm
 .DS_Store
+
+local.properties

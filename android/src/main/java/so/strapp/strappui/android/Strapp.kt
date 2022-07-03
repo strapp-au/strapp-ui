@@ -41,9 +41,9 @@ class ComposableStrappExecutor <T> (
     )
 
     fun snap(label: String, props: T) {
-//        s.snap(label) {
-//            view(props)
-//        }
+        s.snap(label) {
+            view(props)
+        }
     }
 
     override fun apply(base: Statement, description: Description): Statement {
