@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("java-gradle-plugin")
@@ -11,10 +13,16 @@ repositories {
         name = "Strapp Github Packages"
         url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
         credentials {
-            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+            password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
         }
     }
+}
+
+fun getLocalProperty(prop: String): String {
+    val properties = Properties()
+    properties.load(File(rootDir.absolutePath + "/local.properties").inputStream())
+    return properties.getProperty(prop, "")
 }
 
 val pluginVersion = ext.get("strapp_version") as String
