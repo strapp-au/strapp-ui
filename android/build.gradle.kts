@@ -30,7 +30,7 @@ repositories {
 android {
     compileSdk = 30
     defaultConfig {
-        minSdk = 24
+        minSdk = 22
         targetSdk = 31
 
         buildConfigField("String", "PROJECT_DIR", "\"${project.rootDir.absolutePath}\"")
@@ -119,6 +119,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
     implementation("androidx.savedstate:savedstate-ktx:1.1.0")
+    implementation("androidx.test:rules:1.4.0")
 //    implementation(project(":core")) {
 //        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
 //    }
@@ -132,7 +133,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
-    val compose_version = "1.1.0"
+    val compose_version = "1.3.0-alpha01"
     testImplementation("androidx.test:core:1.4.0")
     implementation("androidx.compose.ui:ui:$compose_version")
     // Tooling  support (Previews, etc.)
@@ -146,10 +147,10 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
     // UI Tests
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+    implementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 
-    implementation("app.cash.paparazzi:paparazzi:strapp-1-1.0.0")
-    implementation("app.cash.paparazzi:paparazzi-agent:strapp-1-1.0.0")
+//    implementation("app.cash.paparazzi:paparazzi:strapp-1-1.0.0")
+//    implementation("app.cash.paparazzi:paparazzi-agent:strapp-1-1.0.0")
 
 
 
