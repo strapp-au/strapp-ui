@@ -36,17 +36,17 @@ class StrappPlugin : Plugin<Project> {
     }
 
     private fun addTestDependencies(project: Project) {
-//        project.repositories.maven { repo ->
-//            repo.credentials {
-//                it.username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-//                it.password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+        project.repositories.maven { repo ->
+            repo.credentials {
+                it.username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                it.password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+            repo.setUrl("https://maven.pkg.github.com/strapp-au/strapp-ui")
+            repo.name = "Strapp Github Packages"
+//            repo.metadataSources { sources ->
+//                sources.artifact()
 //            }
-//            repo.setUrl("https://maven.pkg.github.com/strapp-au/strapp-ui")
-//            repo.name = "Strapp Github Packages"
-////            repo.metadataSources { sources ->
-////                sources.artifact()
-////            }
-//        }
+        }
         project.configurations.getByName("testImplementation").dependencies.add(
             project.dependencies.create("com.github.strapp-au:strapp-ui:22.8.1")
         )
