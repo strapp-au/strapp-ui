@@ -2,6 +2,7 @@ package so.strapp.strappui.android
 
 import android.view.View
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -37,11 +38,11 @@ class ComposableStrappExecutor <T> (
 ): TestRule {
     private val s = StrappTesting(
         root = strapp,
-        componentName = componentName
+        componentName = componentName,
     )
 
     fun snap(label: String, props: T) {
-        s.snap(label) {
+        s.snapshot(label) {
             view(props)
         }
     }
@@ -67,11 +68,11 @@ class ViewStrappExecutor <T> (
 ): TestRule {
     private val s = StrappTesting(
         root = strapp,
-        componentName = componentName
+        componentName = componentName,
     )
 
     fun snap(label: String, props: T) {
-        s.snap(label, view(props))
+        s.snapshot(label, view(props))
     }
 
     override fun apply(base: Statement, description: Description): Statement {

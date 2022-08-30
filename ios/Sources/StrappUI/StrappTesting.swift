@@ -4,22 +4,56 @@
 //  Created by Bren Pearson on 19/2/2022.
 //  Copyright © 2022 orgName. All rights reserved.
 //
+
 import Foundation
 import SwiftUI
+import Shared
 
+func searchPathForStrappFolder(folder: String) -> Bool {
+    let fm = FileManager.default
+    print("Folder: " + folder)
+    do {
+        let children = try fm.contentsOfDirectory(atPath: folder)
+        for child in children {
+            if (child == ".strapp") {
+                print("Matched: " + child)
+                return true
+            } else {
+                print("Not Matched: " + child)
+            }
+        }
+    } catch {
+        return false
+    }
+    
+    return false
+}
 
-public class StrappTesting {
+func getStrappFolder(filePath: String) -> String? {
+    var file = URL(fileURLWithPath: filePath)
+    for _ in 0...5 {
+        file.deleteLastPathComponent()
+        if (searchPathForStrappFolder(folder: file.path)) {
+            return file.appendingPathComponent(".strapp").path
+        }
+    }
+    return nil
+}
+
+public class StrappComponent {
     let componentName: String
-    let projectDir = FileManager().currentDirectoryPath //ProcessInfo.processInfo.environment["PROJECT_DIR"]
-    fileprivate var packageRootPath = URL(fileURLWithPath: #filePath)
+    let group: String
     let snapshotDirectory: URL?
     let configUrl: URL?
     
-    public init(componentName: String) {
-        self.componentName = componentName
-        if projectDir != nil {
-            self.snapshotDirectory = URL(string: projectDir! + "/.strapp/snaps/ios")
-            self.configUrl = URL(fileURLWithPath: projectDir! + "/.strapp/config.json", isDirectory: false)
+    public init(name: String, group: String = "", filePath: String = #filePath) {
+        self.componentName = name
+        self.group = group
+        let strappDir = getStrappFolder(filePath: filePath)
+
+        if strappDir != nil {
+            self.snapshotDirectory = URL(string: strappDir! + "/snapshots/ios")
+            self.configUrl = URL(fileURLWithPath: strappDir! + "/config.json", isDirectory: false)
             
 //            do {
 //                var config = try getConfig()
@@ -37,8 +71,10 @@ public class StrappTesting {
             self.configUrl = nil
         }
     }
+
+
     
-    public func snap<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
+    public func snapshot<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
         print(snapshotDirectory!.absoluteString)
         assert(snapshotDirectory != nil)
         if snapshotDirectory != nil {
@@ -60,71 +96,66 @@ public class StrappTesting {
             } else {
                fileManager.createFile(atPath: file.path, contents: image.pngData()!, attributes: [:])
             }
-            
-            let snap = StrappSnap(label: label, snap: file.path)
 
+            let configBuilder = StrappConfigBuilder()
+            
             do {
-                var config = try getConfig()
+                let config = try getConfig()
 
                 if config != nil {
-                    var snaps = config?.components.ios.first(where: { component in
-                        component.name == componentName
-                    })?.snaps
-                    
-                    if snaps != nil {
-                        snaps?.removeAll(where: { c in
-                            c.label == label
-                        })
-                        snaps?.append(snap)
-                        let component = StrappComponent(name: componentName, snaps: snaps!)
-                        config?.components.ios.removeAll(where: { component in
-                            component.name == componentName
-                        })
-                        config?.components.ios.append(component)
-                        snaps = component.snaps
-                    } else {
-                        
-                        let component = StrappComponent(name: componentName, snaps: [snap])
-                        config?.components.ios.append(component)
-                        snaps = component.snaps
-                    }
-                    try writeConfig(config: config!)
+                    let newConfig: String = configBuilder.addSnapshot(
+                        componentName: self.componentName,
+                        componentGroup: self.group,
+                        snapshotLabel: label,
+                        snapshotPath: file.path,
+                        configString: config!
+                    )
+                    writeConfig(config: newConfig)
                 }
                 
             } catch {
-                let config = StrappConfig(components: StrappComponents(android: [], ios: [StrappComponent(name: componentName, snaps: [snap])]))
-                try writeConfig(config: config)
+                let json = try JSONEncoder().encode(
+                    StrappConfig(
+                        components: [
+                            Component(name: componentName, group: group, snapshots: [Snapshot(label: label, type: "png", src: file.path)])
+                        ]
+                    )
+                )
+                let config = String(decoding: json, as: UTF8.self).replacingOccurrences(of: "\\", with: "")
+                writeConfig(config: config)
             }
             
             assert(fileManager.fileExists(atPath: (file.path)))
         }
     }
     
-    private func getConfig() throws -> StrappConfig? {
-        return try JSONDecoder().decode(StrappConfig.self, from: Data(contentsOf: configUrl!))
+    private func getConfig() throws -> String? {
+        return try String(decoding: Data(contentsOf: configUrl!), as: UTF8.self).replacingOccurrences(of: "\\", with: "")
     }
     
-    private func writeConfig(config: StrappConfig) throws {
-        try JSONEncoder().encode(config).write(to: URL(fileURLWithPath: configUrl!.path, isDirectory: false))
+    private func writeConfig(config: String) {
+        let url = URL(fileURLWithPath: configUrl!.path, isDirectory: false)
+        do {
+            try config.write(to: url, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            
+        }
     }
     
     struct StrappConfig: Codable {
-        var components: StrappComponents
+        var components: Array<Component>
     }
 
-    struct StrappComponents: Codable {
-        var android: Array<StrappComponent>
-        var ios: Array<StrappComponent>
-    }
-
-    struct StrappComponent: Codable {
+    struct Component: Codable {
         var name: String
-        var snaps: Array<StrappSnap>
+        var group: String
+        var snapshots: Array<Snapshot>
     }
 
-    struct StrappSnap: Codable {
+    struct Snapshot: Codable {
         var label: String
-        var snap: String
+        var type: String
+        var src: String
     }
 }
 
@@ -153,19 +184,31 @@ extension SwiftUI.View {
         return controller
     }
     
-    public func snapshot() -> UIImage {
-        let controller = UIHostingController(rootView: self)
+    public func snapshot(size: CGSize? = nil, backgroundColor: UIColor = .white) -> UIImage {
+        
+        let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
         let view = controller.view
 
-//        let targetSize = controller.view.intrinsicContentSize
-        let size = CGSize(width: CGFloat(720), height: CGFloat(1280))
-        view?.bounds = CGRect(origin: .zero, size: size)
-        view?.backgroundColor = .white
+        let targetSize = size ?? controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = backgroundColor
 
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
 
         return renderer.image { _ in
             view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
+//
+//        let targetSize = controller.view.intrinsicContentSize
+//        let size = CGSize(width: targetSize.width, height: targetSize.height * 2)
+////        let size = CGSize(width: CGFloat(720), height: CGFloat(1280))
+//        view?.bounds = CGRect(origin: .zero, size: size)
+//        view?.backgroundColor = .gray
+//
+//        let renderer = UIGraphicsImageRenderer(size: size)
+//
+//        return renderer.image { _ in
+//            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+//        }
     }
 }

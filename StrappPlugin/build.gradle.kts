@@ -7,14 +7,14 @@ plugins {
 
 repositories {
     mavenLocal()
-    maven {
-        name = "Strapp Github Packages"
-        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
-        credentials {
-            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-        }
-    }
+//    maven {
+//        name = "Strapp Github Packages"
+//        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
+//        credentials {
+//            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+//            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+//        }
+//    }
 }
 
 val pluginVersion = ext.get("strapp_version") as String
@@ -56,13 +56,8 @@ publishing {
 }
 
 dependencies {
-//    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.jar"))))
-
-    implementation("app.cash.paparazzi:paparazzi:strapp-1-1.0.0")
-    implementation("app.cash.paparazzi:paparazzi-gradle-plugin:strapp-1-1.0.0")
-//    implementation(project(":paparazzi:paparazzi"))
-//    implementation(project(":paparazzi:paparazzi-gradle-plugin"))
-
+    implementation("app.cash.paparazzi:paparazzi:1.0.0")
+    implementation("app.cash.paparazzi:paparazzi-gradle-plugin:1.0.0")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile> {

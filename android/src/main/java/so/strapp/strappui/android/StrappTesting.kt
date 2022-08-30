@@ -1,18 +1,37 @@
 package so.strapp.strappui.android
 
+import au.strapp.core.StrappConfigBuilder
+import android.app.Activity
 import android.graphics.Bitmap
+import android.os.Environment.DIRECTORY_PICTURES
+import android.os.Environment.getExternalStoragePublicDirectory
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.ComponentActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.test.captureToImage
+import androidx.compose.ui.test.junit4.*
+import androidx.compose.ui.test.onRoot
+import androidx.core.graphics.applyCanvas
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import app.cash.paparazzi.Environment
 import app.cash.paparazzi.Paparazzi
+import app.cash.paparazzi.Snapshot
+import app.cash.paparazzi.TestName
 import com.android.ide.common.rendering.api.SessionParams
-import com.android.resources.*
+import com.android.resources.ScreenOrientation
 import com.google.gson.Gson
+import org.junit.Rule
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -47,55 +66,30 @@ class StrappTesting(
 //        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
     )
 
-//    private val composeRule = createComposeRule()
+    lateinit var testName: TestName
 
-    @Composable
-    fun TestView(view: @Composable (() -> Unit)?) {
-        view?.invoke()
-    }
-
-    fun snap(
+    fun snapshot(
         label: String = "Default",
         layout: Int,
-        bind: (view: View) -> View
+        bind: (view: View) -> Unit = {}
     ) {
         snapView(label, layout, bind)
     }
 
-    fun getInflater(): LayoutInflater {
+    private fun getInflater(): LayoutInflater {
         return paparazzi.layoutInflater
     }
 
-    val context get() = paparazzi.context
+    private val context get() = paparazzi.context
 
-    private fun snapView(label: String, layout: Int, bind: (view: View) -> View) {
+    private fun snapView(label: String, layout: Int, bind: (view: View) -> Unit = {}) {
         paparazzi.inflate<View>(layout).let { root ->
-            snap(label, bind(root))
+            bind(root)
+            snapshot(label, root)
         }
     }
 
-    private fun snapView(label: String, view: @Composable () -> Unit) {
-//        composeRule.setContent {
-//            view()
-//        }
-//        snap(label, composeRule.onRoot())
-//        val fileName =
-//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-//        val file = File()
-//        val image = composeRule.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100)
-        paparazzi.inflate<SnapshotHostView>(R.layout.frame).let { root ->
-            root.findViewById<ComposeView>(R.id.compose_frame).apply {
-                setContent {
-                    TestView {
-                        view()
-                    }
-                }
-            }
-            snap(label, root)
-        }
-    }
-
-    fun snap(
+    fun snapshot(
         label: String = "Default",
         composable: @Composable () -> Unit
     ) {
@@ -106,16 +100,28 @@ class StrappTesting(
 //                )
 //            }
 //        } else {
-            snapView(label, composable)
+//            paparazzi.snapshot(label, composable)
 //        }
 
 //        val fileName =
 //            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-//        paparazzi.snapshot(
-//            name = fileName,
-//            composable = composable
-//        )
-//        val c = config
+        paparazzi.snapshot(
+            name = label,
+            composable = composable
+        )
+
+        val fileName = toFileName(label, testName, extension = "png")
+        val paparazziFile = File("${paparazziSnapshotDir}/${fileName}")
+        val strappFile = File("${snapDir}/${fileName}")
+        paparazziFile.copyTo(strappFile)
+        paparazziFile.delete()
+
+        updateConfig(StrappConfigBuilder().addSnapshot(
+            componentName,
+            label,
+            strappFile.absolutePath,
+            config
+        ))
 //        updateConfig(StrappConfig(
 //            components = StrappComponents(
 //                ios = c.components.ios,
@@ -134,7 +140,7 @@ class StrappTesting(
 //                                0,
 //                                StrappSnap(
 //                                    label = label,
-//                                    snap = "$snapDir/$fileName.png"
+//                                    snap = "$snapDir/$fileName"
 //                                )
 //                            )
 //                        }
@@ -145,41 +151,54 @@ class StrappTesting(
 //        ))
     }
 
-    fun snap(label: String, view: View) {
-        val fileName =
-            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+    fun snapshot(label: String, view: View) {
+//        val fileName =
+//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
+
         paparazzi.snapshot(
             view = view,
-            name = fileName
+            name = label
         )
-        val c = config
-        updateConfig(StrappConfig(
-            components = StrappComponents(
-                ios = c.components.ios,
-                android = arrayListOf<StrappComponent>().apply {
-                    this.addAll(c.components.android)
-                    val component = this.find {
-                        it.name == componentName
-                    }
-                    this.removeIf { it.name == componentName }
-                    this.add(StrappComponent(
-                        name = componentName,
-                        snaps = arrayListOf<StrappSnap>().apply {
-                            component?.snaps?.let { this.addAll(it) }
-                            this.removeIf { it.label == label }
-                            this.add(
-                                0,
-                                StrappSnap(
-                                    label = label,
-                                    snap = "$snapDir/$fileName.png"
-                                )
-                            )
-                        }
-                    ))
-                    this.sortBy { it.name }
-                }
-            )
+        val fileName = toFileName(label, testName, extension = "png")
+        val paparazziFile = File("${paparazziSnapshotDir}/${fileName}")
+        val strappFile = File("${snapDir}/${fileName}")
+        strappFile.delete()
+        paparazziFile.copyTo(strappFile)
+        paparazziFile.delete()
+
+        updateConfig(StrappConfigBuilder().addSnapshot(
+            componentName,
+            label,
+            strappFile.absolutePath,
+            config
         ))
+//        updateConfig(StrappConfig(
+//            components = StrappComponents(
+//                ios = c.components.ios,
+//                android = arrayListOf<StrappComponent>().apply {
+//                    this.addAll(c.components.android)
+//                    val component = this.find {
+//                        it.name == componentName
+//                    }
+//                    this.removeIf { it.name == componentName }
+//                    this.add(StrappComponent(
+//                        name = componentName,
+//                        snaps = arrayListOf<StrappSnap>().apply {
+//                            component?.snaps?.let { this.addAll(it) }
+//                            this.removeIf { it.label == label }
+//                            this.add(
+//                                0,
+//                                StrappSnap(
+//                                    label = label,
+//                                    snap =
+//                                )
+//                            )
+//                        }
+//                    ))
+//                    this.sortBy { it.name }
+//                }
+//            )
+//        ))
     }
 
     data class StrappConfig(
@@ -203,27 +222,50 @@ class StrappTesting(
 
     private val gson = Gson()
 
-    private val projectDir = BuildConfig.PROJECT_DIR
+    private val projectDir = System.getProperty("strapp.test.project_root")
+    private val moduleDir = System.getProperty("strapp.test.module_root")
     private val snapDir = "${projectDir}/.strapp/snapshots/android/images"
-    private val configPath = "$projectDir/.strapp/config.json"
+    private val configPath = File("$projectDir/.strapp/config.json")
+    private val paparazziSnapshotDir = "${moduleDir}/src/test/snapshots/images"
 
-    private val config: StrappConfig get() =
-        gson.fromJson(File(configPath).let {
+    init {
+        configPath.parentFile?.mkdirs()
+        configPath.createNewFile()
+    }
+
+    private val config: String get() =
+        configPath.let {
             it.parentFile?.mkdirs()
             it.createNewFile()
             it.readText()
-        }, StrappConfig::class.java)?: StrappConfig(
-            components = StrappComponents(
-                android = listOf(),
-                ios = listOf()
-            )
-        )
-    private fun updateConfig(config: StrappConfig) {
-        File(configPath).apply {
+        }
+    private fun updateConfig(config: String) {
+        configPath.apply {
             this.parentFile?.mkdirs()
             this.createNewFile()
-            this.writeText(gson.toJson(config))
+            this.writeText(config)
         }
+    }
+
+    private fun toFileName(
+        name: String,
+        testName: TestName,
+        delimiter: String = "_",
+        extension: String
+    ): String {
+        val formattedLabel = if (name != null) {
+            "$delimiter${name.toLowerCase(Locale.US).replace("\\s".toRegex(), delimiter)}"
+        } else {
+            ""
+        }
+        return "${testName.packageName}${delimiter}${testName.className}${delimiter}${testName.methodName}$formattedLabel.$extension"
+    }
+
+    private fun Description.toTestName(): TestName {
+        val fullQualifiedName = className
+        val packageName = fullQualifiedName.substringBeforeLast('.', missingDelimiterValue = "")
+        val className = fullQualifiedName.substringAfterLast('.')
+        return TestName(packageName, className, methodName)
     }
 
     fun prepare(description: Description) {
@@ -239,9 +281,15 @@ class StrappTesting(
             override fun evaluate() {
                 try {
                     paparazzi.prepare(description)
+                    testName = description.toTestName()
                     base.evaluate()
                 } finally {
                     paparazzi.close()
+
+                    val paparazziImagesDir = File(paparazziSnapshotDir)
+                    if (paparazziImagesDir.listFiles()?.isEmpty() == true) {
+                        paparazziImagesDir.parentFile?.deleteRecursively()
+                    }
                 }
             }
         }
