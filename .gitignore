@@ -26,6 +26,8 @@ hs_err_pid*
 .gradle/*
 android/build/*
 shared/build/*
+core/build/*
+build/*
 
 .build
 .swiftpm

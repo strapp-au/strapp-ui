@@ -1,17 +1,12 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.6.10"
-    id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
     id("maven-publish")
 }
 
 kotlin {
     android()
-
-    val xcFramework = XCFramework("Shared")
 
     listOf(
         iosX64(),
@@ -19,8 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
-            xcFramework.add(this)
+            baseName = "core"
         }
     }
 
@@ -54,6 +48,26 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+//        repositories {
+//            maven {
+//                name = "GitHubPackages"
+//                url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
+//                credentials {
+//                    username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+//                    password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+//                }
+//            }
+//        }
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+            }
         }
     }
 }

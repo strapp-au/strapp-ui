@@ -17,14 +17,14 @@ version = libVersion
 
 repositories {
     mavenLocal()
-    maven {
-        name = "Strapp Github Packages"
-        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
-        credentials {
-            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-        }
-    }
+//    maven {
+//        name = "Strapp Github Packages"
+//        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
+//        credentials {
+//            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+//            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+//        }
+//    }
 }
 
 android {
@@ -111,7 +111,7 @@ fun getLocalProperty(prop: String): String {
 }
 
 dependencies {
-//    implementation(project(":shared"))
+    implementation(project(":core"))
 
 //    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.jar"))))
 
@@ -149,8 +149,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     implementation("androidx.compose.ui:ui-test-manifest:$compose_version")
 
-//    implementation("app.cash.paparazzi:paparazzi:strapp-1-1.0.0")
-//    implementation("app.cash.paparazzi:paparazzi-agent:strapp-1-1.0.0")
+    implementation("app.cash.paparazzi:paparazzi:1.0.0")
+    implementation("app.cash.paparazzi:paparazzi-agent:1.0.0")
 
 
 
