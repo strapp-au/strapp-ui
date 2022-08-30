@@ -1,0 +1,177 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "StrappUI",
+    "module": "shared",
+    "version": "unspecified",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.6.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.3.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "shared-metadata-all.jar",
+          "url": "shared-unspecified-all.jar",
+          "size": 5541,
+          "sha512": "bda8c5eaf46e5ce754cc91b0cb6e1c6e2f4f01c9a9e4bad83831d7b56498c05ab101cff17d843b49eea4b1a9ed837fafcc76882783c8601690fbeef94151ad91",
+          "sha256": "adb04b5b727652a104674dc7a9010c5bdb40ff77d31ebe407b24773c1184f56a",
+          "sha1": "b096073c2ea9e07552ac755580054dec05326486",
+          "md5": "72acc4bca9ef7e9c5fd725a116445946"
+        }
+      ]
+    },
+    {
+      "name": "commonMainMetadataElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-common",
+          "version": {
+            "requires": "1.6.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "shared.jar",
+          "url": "shared-unspecified.jar",
+          "size": 2480,
+          "sha512": "c07537cbaa4c7d008d2d10d23056068a609d41facb06ea9534953cb15184ac77d3ea479f171dd3eb8d4a1f5ce3eff5132ea00f0f099034f0703a679bd2a090b9",
+          "sha256": "4ad54462ab38c6bb5fa910864a2ad698a92672d3d8dc808392838d2e22f48b31",
+          "sha1": "2a930fac553427d7f5d19b64bd4cdd71a542d420",
+          "md5": "303ec0f78434052de1703d195bb70bdf"
+        }
+      ]
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iosarm64/unspecified/shared-iosarm64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iosarm64/unspecified/shared-iosarm64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iosarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iossimulatorarm64/unspecified/shared-iossimulatorarm64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iossimulatorarm64/unspecified/shared-iossimulatorarm64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iossimulatorarm64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosX64ApiElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iosx64/unspecified/shared-iosx64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iosx64",
+        "version": "unspecified"
+      }
+    },
+    {
+      "name": "iosX64MetadataElements-published",
+      "attributes": {
+        "artifactType": "org.jetbrains.kotlin.klib",
+        "org.gradle.category": "library",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_x64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../shared-iosx64/unspecified/shared-iosx64-unspecified.module",
+        "group": "StrappUI",
+        "module": "shared-iosx64",
+        "version": "unspecified"
+      }
+    }
+  ]
+}

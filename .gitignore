@@ -25,7 +25,6 @@ hs_err_pid*
 .idea/*
 .gradle/*
 android/build/*
-shared/build/*
 core/build/*
 build/*
 
