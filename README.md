@@ -103,10 +103,14 @@ class MyButtonTest: XCTestCase {
     )
     
     // SwiftUI
-    func testMyButtonDefault() throws {
-        try strapp.snapshot(label: "Default") {
+    func testMyButtonSwiftUI() throws {
+        try strapp.snapshot(label: "With SwiftUI") {
           MyButton(text: "Testing")
         }
+    }
+    
+    func testMyButtonViewController() throws {
+        try strapp.snapshot(label: "With View Controller", view: MyViewController())
     }
 }
 ```
