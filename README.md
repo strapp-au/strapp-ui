@@ -28,9 +28,19 @@ strapp run
 Apply the strapp-ui gradle plugin
 ```
 plugins {
-    id("au.strapp.strapp-ui").version("0.1.1")
+    id("au.strapp.strapp-ui").version("22.9.0")
 }
 ```
+
+Add Jitpack repository to your module
+```
+ repositories {
+   // ...
+   maven {
+     url 'https://jitpack.io'
+   }
+ }
+ ```
 
 Now you can write a unit test for each UI component state you want to capture in your builds.
 
@@ -38,13 +48,23 @@ Jetpack Compose
 ```
     @get:Rule
     val strapp = StrappTesting(
-        componentName = "Example"
+        componentName = "Example",
+        group = "My group"
     )
-
+    
+    // Jetpack Compose
     @Test
-    fun default() {
-        strapp.snap(label = "Default") {
+    fun composeView() {
+        strapp.snapshot(label = "Default") {
             CustomButton(text = "This is my default button")
+        }
+    }
+    
+    // Layout Resource View
+    @Test
+    fun resourceView() {
+        strapp.snapshot(label = "Default", layout = R.layout.example) { view ->
+            view.findViewById<TextView>(R.id.my_text_view).text = "Set the text of something in the view"
         }
     }
 ```
@@ -61,6 +81,8 @@ In terminal within your project root directory run;
 `strapp build` to take your snapshots and prepare the local data,
 `strapp run` to run to local server - accessible at http://localhost:3001
 
+Strapp currently can only be added to an Android Library module. We recommend that you create a new module in Android Studio for your UI components if you have not already.
+
 
 ## iOS 
 Add this git repository as a Swift package in your iOS project
@@ -75,10 +97,14 @@ Now you can add a unit test for each UI component state which you would like to 
 
 class MyButtonTest: XCTestCase {
     
-    let strapp = StrappTesting(componentName: "My Button")
+    let strapp = StrappTesting(
+        componentName: "My Button",
+        group: "My group"
+    )
     
+    // SwiftUI
     func testMyButtonDefault() throws {
-        try strapp.snap(label: "Default") {
+        try strapp.snapshot(label: "Default") {
           MyButton(text: "Testing")
         }
     }
@@ -96,12 +122,6 @@ ios:
   simulator: iPhone 13 Pro
   OS: 15.4
 ```
-
-Set a PROJECT_DIR environment variable to your local path for the repository;
-
-In XCode; Scheme -> Edit scheme... -> Test -> Arguments -> Environment Variables
-
-`PROJECT_DIR` | `/Users/myuser/path/to/project`
 
 In terminal within your project root directory run;
 
