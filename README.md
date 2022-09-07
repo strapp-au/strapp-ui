@@ -46,6 +46,7 @@ Now you can write a unit test for each UI component state you want to capture in
 
 ```
 class ExampleTests {
+
     @get:Rule
     val strapp = StrappTesting(
         componentName = "Example",
@@ -67,13 +68,12 @@ class ExampleTests {
             view.findViewById<TextView>(R.id.my_text_view).text = "Set the text of something in the view"
         }
     }
+    
 }
 ```
 
 Add a `strapp.yml` file to your project root directory.
 ```
-version: 0.1
-
 android:
   module: app:components
 ```
@@ -110,16 +110,16 @@ class MyButtonTest: XCTestCase {
         }
     }
     
+    // UIViewController
     func testMyButtonViewController() throws {
         try strapp.snapshot(label: "With View Controller", view: MyViewController())
     }
+    
 }
 ```
 
 Add a `strapp.yml` file to your project root directory.
 ```
-version: 0.1
-
 ios:
   project: StrappExample.xcodeproj
   scheme: StrappExample
