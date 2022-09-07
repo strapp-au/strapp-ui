@@ -44,11 +44,11 @@
         {
           "name": "shared.klib",
           "url": "shared-iossimulatorarm64-unspecified.klib",
-          "size": 14443,
-          "sha512": "ad5d38f90e9bd35fd2c6653f7f7d08a542ddbb5fdadfd914131b692145ba6c153a29ed0a1f96f4389a4eb591336495d736c4a61cb10994cfc56609a70c37d878",
-          "sha256": "242113ab230eae93ae2b2ce3061cee4e666b8deef7d7570770e1397f6defbf32",
-          "sha1": "b0c1e7726c9080f8e6d5f79ed7cee7892c5ee9c4",
-          "md5": "6ffa62973321714f6271034f1f03682c"
+          "size": 20859,
+          "sha512": "40ac3cc3c9dd95444184afa6f9547abd0042dc817e8e1ac184ce52b242ebb6052222bc9e0c66e6befa1b885ccb4a2b2a9a02c626da115afa00e64746f1145d58",
+          "sha256": "bf74e07c779b5e87e7dbb6255c14e0d3979e899fdcdf314a87fb49fdb237a9c6",
+          "sha1": "b55549ae4fbb2c5166e48295b294a4a5c3bc954b",
+          "md5": "915f1d349bacb5f24cc562bb686b2279"
         }
       ]
     },

@@ -46,9 +46,10 @@ class StrappPlugin : Plugin<Project> {
 ////            repo.metadataSources { sources ->
 ////                sources.artifact()
 ////            }
-//        }
+//
+//      }
         project.configurations.getByName("testImplementation").dependencies.add(
-            project.dependencies.create("com.github.strapp-au:strapp-ui:22.8.1")
+            project.dependencies.create("com.github.strapp-au:strapp-ui:22.8.2")
         )
     }
 }

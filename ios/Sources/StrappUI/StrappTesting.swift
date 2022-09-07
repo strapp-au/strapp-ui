@@ -43,12 +43,14 @@ func getStrappFolder(filePath: String) -> String? {
 public class StrappComponent {
     let componentName: String
     let group: String
+    let size: CGSize?
     let snapshotDirectory: URL?
     let configUrl: URL?
     
-    public init(name: String, group: String = "", filePath: String = #filePath) {
+    public init(name: String, group: String = "", filePath: String = #filePath, size: CGSize? = nil) {
         self.componentName = name
         self.group = group
+        self.size = size
         let strappDir = getStrappFolder(filePath: filePath)
 
         if strappDir != nil {
@@ -73,6 +75,19 @@ public class StrappComponent {
     }
 
 
+    struct SnapshotContainer<Content: View>: View {
+        var view: Content
+      var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top, spacing: 0){
+                view
+                Spacer()
+            }
+          
+          Spacer()
+        }
+      }
+    }
     
     public func snapshot<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
         print(snapshotDirectory!.absoluteString)
@@ -88,7 +103,7 @@ public class StrappComponent {
                     .appending(".png")
             )
             
-            let image = view().snapshot()
+            let image = SnapshotContainer(view: view()).snapshot(size: size)
             let fileManager = FileManager.default
             let exists = fileManager.fileExists(atPath: (file.path))
             if exists {
@@ -189,9 +204,10 @@ extension SwiftUI.View {
         let controller = UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
         let view = controller.view
 
-        let targetSize = size ?? controller.view.intrinsicContentSize
+        let targetSize = CGSize(width: 296, height: 296)//controller.view.intrinsicContentSize
         view?.bounds = CGRect(origin: .zero, size: targetSize)
         view?.backgroundColor = backgroundColor
+        view?.overrideUserInterfaceStyle = .light
 
         let renderer = UIGraphicsImageRenderer(size: targetSize)
 
