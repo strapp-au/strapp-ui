@@ -44,14 +44,14 @@ Add Jitpack repository to your module
 
 Now you can write a unit test for each UI component state you want to capture in your builds.
 
-Jetpack Compose
 ```
+class ExampleTests {
     @get:Rule
     val strapp = StrappTesting(
         componentName = "Example",
         group = "My group"
     )
-    
+
     // Jetpack Compose
     @Test
     fun composeView() {
@@ -59,7 +59,7 @@ Jetpack Compose
             CustomButton(text = "This is my default button")
         }
     }
-    
+
     // Layout Resource View
     @Test
     fun resourceView() {
@@ -67,6 +67,7 @@ Jetpack Compose
             view.findViewById<TextView>(R.id.my_text_view).text = "Set the text of something in the view"
         }
     }
+}
 ```
 
 Add a `strapp.yml` file to your project root directory.
