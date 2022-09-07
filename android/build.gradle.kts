@@ -68,51 +68,51 @@ android {
 }
 
 afterEvaluate {
-//    publishing {
-//        publications {
-//            create<MavenPublication>("release") {
-//                groupId = "com.github.strapp-au"
-//                artifactId = "strapp-ui"
-//                version = libVersion
-//                description = libVersion
-//
-//                from(components["release"])
-//            }
-//            create<MavenPublication>("debug") {
-//                from(components["debug"])
-//            }
-//        }
-//        // note repositories goes under publishing
-//        repositories {
-//            maven {
-////                url = "file://$projectDir/deploy"
-//            }
-//        }
-//    }
     publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
-                credentials {
-                    username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                    password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-                }
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.strapp-au"
+                artifactId = "strapp-ui"
+                version = libVersion
+                description = libVersion
+
+                from(components["release"])
+            }
+            create<MavenPublication>("debug") {
+                from(components["debug"])
             }
         }
-        publications {
-            register<MavenPublication>("release") {
-                from(components["release"])
+        // note repositories goes under publishing
+        repositories {
+            maven {
+//                url = "file://$projectDir/deploy"
             }
         }
     }
+//    publishing {
+//        repositories {
+//            maven {
+//                name = "GitHubPackages"
+//                url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
+//                credentials {
+//                    username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+//                    password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+//                }
+//            }
+//        }
+//        publications {
+//            register<MavenPublication>("release") {
+//                from(components["release"])
+//            }
+//        }
+//    }
 }
 
-fun getLocalProperty(prop: String): String {
-    val properties = Properties()
-    properties.load(File(rootDir.absolutePath + "/local.properties").inputStream())
-    return properties.getProperty(prop, "")
-}
+//fun getLocalProperty(prop: String): String {
+//    val properties = Properties()
+//    properties.load(File(rootDir.absolutePath + "/local.properties").inputStream())
+//    return properties.getProperty(prop, "")
+//}
 
 dependencies {
     implementation(project(":core"))
