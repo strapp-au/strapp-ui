@@ -14,19 +14,23 @@ class Strapp (
 
     fun <T> composable(
         componentName: String,
+        group: String,
         view: @Composable (props: T) -> Unit
     ) = ComposableStrappExecutor(
         strapp = this,
         componentName = componentName,
+        group = group,
         view = view
     )
 
     fun <T> view(
         componentName: String,
+        group: String,
         view: (props: T) -> View
     ) = ViewStrappExecutor(
         strapp = this,
         componentName = componentName,
+        group = group,
         view = view
     )
 }
@@ -34,11 +38,13 @@ class Strapp (
 class ComposableStrappExecutor <T> (
     val strapp: Strapp,
     val componentName: String,
+    val group: String,
     val view: @Composable (props: T) -> Unit,
 ): TestRule {
     private val s = StrappTesting(
         root = strapp,
         componentName = componentName,
+        group = group
     )
 
     fun snap(label: String, props: T) {
@@ -64,11 +70,13 @@ class ComposableStrappExecutor <T> (
 class ViewStrappExecutor <T> (
     val strapp: Strapp,
     val componentName: String,
+    val group: String,
     val view: (props: T) -> View,
 ): TestRule {
     private val s = StrappTesting(
         root = strapp,
         componentName = componentName,
+        group = group
     )
 
     fun snap(label: String, props: T) {

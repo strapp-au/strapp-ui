@@ -8,6 +8,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("maven-publish")
+    kotlin("kapt")
 }
 
 val libVersion = ext.get("strapp_version") as String
@@ -33,8 +34,6 @@ android {
         minSdk = 22
         targetSdk = 31
 
-        buildConfigField("String", "PROJECT_DIR", "\"${project.rootDir.absolutePath}\"")
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -55,6 +54,11 @@ android {
 
     buildFeatures {
         compose = true
+        dataBinding = true
+    }
+
+    dataBinding {
+        isEnabled = true
     }
 
     composeOptions {
@@ -130,6 +134,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.3.2")
     implementation(kotlin("test-junit"))
     implementation("junit:junit:4.13.2")
+    kaptTest("androidx.databinding:databinding-compiler:7.2.0")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 

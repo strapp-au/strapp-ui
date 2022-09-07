@@ -40,7 +40,8 @@ import java.util.*
 
 class StrappTesting(
     private val root: Strapp = Strapp("Default", listOf({ content -> MaterialTheme(content = content) })),
-    private val componentName: String
+    private val componentName: String,
+    private val group: String
 ): TestRule {
 
     private val paparazzi = Paparazzi(
@@ -59,9 +60,9 @@ class StrappTesting(
             keyboardState = com.android.resources.KeyboardState.SOFT,
             softButtons = false,
             navigation = com.android.resources.Navigation.NONAV,
-            released = "October 15, 2020"
+            released = "October 15, 2020",
         ),
-        theme = "android:Theme.Material.Light.NoActionBar.Fullscreen",
+        theme = "Theme.MaterialComponents.Light.NoActionBar",
         renderingMode = SessionParams.RenderingMode.SHRINK,
 //        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
     )
@@ -118,6 +119,7 @@ class StrappTesting(
 
         updateConfig(StrappConfigBuilder().addSnapshot(
             componentName,
+            group,
             label,
             strappFile.absolutePath,
             config
@@ -168,6 +170,7 @@ class StrappTesting(
 
         updateConfig(StrappConfigBuilder().addSnapshot(
             componentName,
+            group,
             label,
             strappFile.absolutePath,
             config

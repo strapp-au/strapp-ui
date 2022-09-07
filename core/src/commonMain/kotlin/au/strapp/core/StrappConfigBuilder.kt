@@ -9,6 +9,7 @@ class StrappConfigBuilder {
 
     fun addSnapshot(
         componentName: String,
+        componentGroup: String,
         snapshotLabel: String,
         snapshotPath: String,
         configString: String
@@ -23,10 +24,11 @@ class StrappConfigBuilder {
             this.removeAll { it.name == component?.name }
             this.add(StrappComponent(
                 name = componentName,
+                group = componentGroup,
                 snapshots = arrayListOf<StrappSnapshot>().apply {
                     component?.snapshots?.let { this.addAll(it) }
                     this.removeAll { it.label == snapshotLabel }
-                    this.add(
+                    this.add(0,
                         StrappSnapshot(
                             label = snapshotLabel,
                             type = "png",
@@ -37,9 +39,11 @@ class StrappConfigBuilder {
             ))
             this.sortBy { it.name }
         }
-        return Json.encodeToString(StrappConfig(
+        return Json.encodeToString(
+            StrappConfig(
             components = components
-        )).replace("\\","")
+        )
+        ).replace("\\","")
     }
 
     @Serializable
@@ -50,6 +54,7 @@ class StrappConfigBuilder {
     @Serializable
     data class StrappComponent(
         val name: String,
+        val group: String = "",
         val snapshots: List<StrappSnapshot>
     )
 
