@@ -6,9 +6,9 @@
   <!-- that they should prefer consuming it instead. -->
   <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>StrappUI</groupId>
+  <groupId>com.github.strapp-au</groupId>
   <artifactId>shared-iosx64</artifactId>
-  <version>unspecified</version>
+  <version>22.9.2</version>
   <packaging>klib</packaging>
   <dependencies>
     <dependency>

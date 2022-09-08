@@ -49,7 +49,7 @@ class StrappPlugin : Plugin<Project> {
 //
 //      }
         project.configurations.getByName("testImplementation").dependencies.add(
-            project.dependencies.create("com.github.strapp-au:strapp-ui:22.9.2")
+            project.dependencies.create("com.github.strapp-au:strapp-ui:22.9.3")
         )
     }
 }

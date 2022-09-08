@@ -58,11 +58,40 @@ kotlin {
     }
 }
 
+val libVersion = ext.get("strapp_version") as String
+
+group = "com.github.strapp-au"
+version = libVersion
+
 android {
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
         targetSdk = 32
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            getByName<MavenPublication>("kotlinMultiplatform") {
+                groupId = "com.github.strapp-au.strapp-ui"
+                artifactId = "shared"
+
+                version = libVersion
+                description = libVersion
+            }
+
+            create<MavenPublication>("release") {
+                groupId = "com.github.strapp-au.strapp-ui"
+                artifactId = "shared"
+
+                version = libVersion
+                description = libVersion
+
+                from(components["release"])
+            }
+        }
     }
 }

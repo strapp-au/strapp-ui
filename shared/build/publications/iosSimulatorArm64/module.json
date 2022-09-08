@@ -1,10 +1,10 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "url": "../../shared/unspecified/shared-unspecified.module",
-    "group": "StrappUI",
+    "url": "../../shared/22.9.2/shared-22.9.2.module",
+    "group": "com.github.strapp-au.strapp-ui",
     "module": "shared",
-    "version": "unspecified",
+    "version": "22.9.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -43,12 +43,12 @@
       "files": [
         {
           "name": "shared.klib",
-          "url": "shared-iossimulatorarm64-unspecified.klib",
-          "size": 18483,
-          "sha512": "aaa6d4fd45c830a5c4ff2355cb5963767476901e93f263bdb10f1be6ea3887940927c18d1cbfe70e733a2271bfa3e8627a1786edbfd24eba3257c05ae0bf17d6",
-          "sha256": "8413802138917eaf584ddd771088108f12c7c2910048fda694f09d3186bd5526",
-          "sha1": "1fb236fe7c9633e5d3dbeac5b870d15e1930ef2a",
-          "md5": "a6975a13175e02def37a81515665a5de"
+          "url": "shared-iossimulatorarm64-22.9.2.klib",
+          "size": 18498,
+          "sha512": "4520a02c62f69482191ba4e2d91f34ccd3533e0e90bf4c1ec89d70fabfc2e76c9c44a453a6b1b01ccda09ff93cc4668444441e2a1fb21384d760c8fcb7cd280c",
+          "sha256": "c12d60730ecbf89a330420eb2d91db469b7b12b18e4094a4e1d905f6bbd44358",
+          "sha1": "b994fd7ba428907d3e4f88157b8d033639b58201",
+          "md5": "38394741b6d11036d26bad52bc9d5927"
         }
       ]
     },
@@ -79,13 +79,13 @@
       ],
       "files": [
         {
-          "name": "shared-iossimulatorarm64-metadata.jar",
-          "url": "shared-iossimulatorarm64-unspecified-metadata.jar",
+          "name": "shared-iossimulatorarm64-22.9.2-metadata.jar",
+          "url": "shared-iossimulatorarm64-22.9.2-metadata.jar",
           "size": 261,
-          "sha512": "58a54b33a606466756ddad3e37471b760365011a0eddeb3a3252334c0af0bdd8e129e32c0aed78a2d9f04f3b801f0929a6d7aaaa508c1aa4c43cc96bc2a0ac62",
-          "sha256": "c95ffed10b9c53f5077641cf482d101b9342f3cdb8f22caee5c967de1de0dcee",
-          "sha1": "7f0fc807132ee1522171e4401a4fc8054f00461b",
-          "md5": "a5fcf9eb085d239a0a21146013c985e0"
+          "sha512": "a4719c1fd745848c4058479af698a5e831c9ba614228502ed6217c8c0400fd77acec316b0c7c0916c0ab70a4c2ef29be3005cbfceaed624544126ece04bf5fa6",
+          "sha256": "8b338f71df1afda5d6a58a4f31fdaffab5e540f45a54a5cd74a8d95f02724166",
+          "sha1": "0e1c93dcb45172f8a5d8a31127da5ae3a620fe3f",
+          "md5": "7bbf120591dc205f617759d90a16db8e"
         }
       ]
     }

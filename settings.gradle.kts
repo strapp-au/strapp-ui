@@ -25,4 +25,3 @@ include(":android-plugin")
 //include ':libs:native-win'
 //include ':libs:native-linux'
 //includeBuild("../paparazzi/paparazzi")
-include(":core")

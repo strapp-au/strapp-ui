@@ -1,10 +1,10 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "url": "../../shared/unspecified/shared-unspecified.module",
-    "group": "StrappUI",
+    "url": "../../shared/22.9.2/shared-22.9.2.module",
+    "group": "com.github.strapp-au.strapp-ui",
     "module": "shared",
-    "version": "unspecified",
+    "version": "22.9.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -43,12 +43,12 @@
       "files": [
         {
           "name": "shared.klib",
-          "url": "shared-iosarm64-unspecified.klib",
-          "size": 18397,
-          "sha512": "03bf81181802e489b320104b9456dcc6cec71130ded425caaf6e31b7b8dc6259252c9f0b05ec894a7178fea59b9c3e3d7b6d12253c367e51c69c23348f27a5ae",
-          "sha256": "922dce2f2c37f7c35b034ec118cbb59f802047b6a1918d12d92a41e5dcbd252a",
-          "sha1": "89caaa15bcae0f79d5bc39fb8767b10a98287496",
-          "md5": "6038b922efb5e0c7ef5106a34a50d787"
+          "url": "shared-iosarm64-22.9.2.klib",
+          "size": 18413,
+          "sha512": "863bdd44d6ae7395107222b5f74b0dce6308cf50f6c588c4a756aacb80f8bf364b635428233f2eeda5763bbd0f5387db2f600162a1dedddefdcc189330083e75",
+          "sha256": "f9e288ac9b8dba5e6541c4eac0a04204588df881fca3cc0693f9e48adac7f288",
+          "sha1": "0a1769aedbe3028397b1285e096b8cdda3a3efe8",
+          "md5": "71d532635a9924f6972e4777085667a9"
         }
       ]
     },
@@ -79,13 +79,13 @@
       ],
       "files": [
         {
-          "name": "shared-iosarm64-metadata.jar",
-          "url": "shared-iosarm64-unspecified-metadata.jar",
+          "name": "shared-iosarm64-22.9.2-metadata.jar",
+          "url": "shared-iosarm64-22.9.2-metadata.jar",
           "size": 261,
-          "sha512": "58a54b33a606466756ddad3e37471b760365011a0eddeb3a3252334c0af0bdd8e129e32c0aed78a2d9f04f3b801f0929a6d7aaaa508c1aa4c43cc96bc2a0ac62",
-          "sha256": "c95ffed10b9c53f5077641cf482d101b9342f3cdb8f22caee5c967de1de0dcee",
-          "sha1": "7f0fc807132ee1522171e4401a4fc8054f00461b",
-          "md5": "a5fcf9eb085d239a0a21146013c985e0"
+          "sha512": "f631e91981d2674578cecb4a390fb8a29bb551dd860c761f99009cdf1826833cff7ca37b48cb9f330703acce98678c997c0d0a147944fbae6d05ee3f9e2d41cc",
+          "sha256": "7563a83691cf3e79536d9ac18d2e487b0c5c907fe584c5d18befd1fcb058dad7",
+          "sha1": "80eae68db635f491f578f96b4c576347961cc3a8",
+          "md5": "8bc993fd02082d1c212074062a0232fc"
         }
       ]
     }
