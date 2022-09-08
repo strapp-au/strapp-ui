@@ -95,7 +95,7 @@ git@github.com:strapp-au/strapp-ui.git
 
 Now you can add a unit test for each UI component state which you would like to take snapshots of.
 ```
-@testable import StrappUI
+import StrappUI
 
 class MyButtonTest: XCTestCase {
     
