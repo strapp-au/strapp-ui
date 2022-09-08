@@ -2,3 +2,4 @@ jdk:
   - openjdk11
 install:
   - ./gradlew strapp-ui:publishToMavenLocal
+  - ./gradlew shared:publishToMavenLocal

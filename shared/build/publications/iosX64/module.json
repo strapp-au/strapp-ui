@@ -1,10 +1,10 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "url": "../../shared/unspecified/shared-unspecified.module",
-    "group": "StrappUI",
+    "url": "../../shared/22.9.2/shared-22.9.2.module",
+    "group": "com.github.strapp-au.strapp-ui",
     "module": "shared",
-    "version": "unspecified",
+    "version": "22.9.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -43,12 +43,12 @@
       "files": [
         {
           "name": "shared.klib",
-          "url": "shared-iosx64-unspecified.klib",
-          "size": 18379,
-          "sha512": "52b52795c4c46a0fb75c4d6001f12c513e4d204d223f989d0f1c43108426d87acab8545ad925e62867a3ebad1591bb5e50aa3a62f51e4fb9a358c7cd391dfdef",
-          "sha256": "48fbe5ba090fe8dbe3e8c8d38d59091ce0e7daee53c9a262e3ad90834d09af26",
-          "sha1": "10f4e25aed31f7ef04506860a3728220660f7a55",
-          "md5": "3976882d047974e54ed0fc8e7cd0a31a"
+          "url": "shared-iosx64-22.9.2.klib",
+          "size": 18394,
+          "sha512": "763838dfdebc858c878561d89338918389df827b4ef41df21541e5e55740c13cd191748c48f959557b5768178475a318af9db8a7dbb367267da8bdfeb457fbe7",
+          "sha256": "804af9c48702b7e06913ffd32f77b7f9aa6c08ef9eda872ed569020d48e14581",
+          "sha1": "13350c598be074a4b68cd08df278ecad0e24c56a",
+          "md5": "621e9b4705eb62260234ab0ecb3a9de2"
         }
       ]
     },
@@ -79,13 +79,13 @@
       ],
       "files": [
         {
-          "name": "shared-iosx64-metadata.jar",
-          "url": "shared-iosx64-unspecified-metadata.jar",
+          "name": "shared-iosx64-22.9.2-metadata.jar",
+          "url": "shared-iosx64-22.9.2-metadata.jar",
           "size": 261,
-          "sha512": "58a54b33a606466756ddad3e37471b760365011a0eddeb3a3252334c0af0bdd8e129e32c0aed78a2d9f04f3b801f0929a6d7aaaa508c1aa4c43cc96bc2a0ac62",
-          "sha256": "c95ffed10b9c53f5077641cf482d101b9342f3cdb8f22caee5c967de1de0dcee",
-          "sha1": "7f0fc807132ee1522171e4401a4fc8054f00461b",
-          "md5": "a5fcf9eb085d239a0a21146013c985e0"
+          "sha512": "a4719c1fd745848c4058479af698a5e831c9ba614228502ed6217c8c0400fd77acec316b0c7c0916c0ab70a4c2ef29be3005cbfceaed624544126ece04bf5fa6",
+          "sha256": "8b338f71df1afda5d6a58a4f31fdaffab5e540f45a54a5cd74a8d95f02724166",
+          "sha1": "0e1c93dcb45172f8a5d8a31127da5ae3a620fe3f",
+          "md5": "7bbf120591dc205f617759d90a16db8e"
         }
       ]
     }

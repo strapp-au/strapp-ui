@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.accessors.runtime.addDependencyTo
 import org.jetbrains.kotlin.konan.properties.Properties
 
 repositories {
@@ -73,6 +74,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.strapp-au"
                 artifactId = "strapp-ui"
+
                 version = libVersion
                 description = libVersion
 

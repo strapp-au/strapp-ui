@@ -1,9 +1,9 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "group": "StrappUI",
+    "group": "com.github.strapp-au.strapp-ui",
     "module": "shared",
-    "version": "unspecified",
+    "version": "22.9.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -39,13 +39,13 @@
       ],
       "files": [
         {
-          "name": "shared-metadata-all.jar",
-          "url": "shared-unspecified-all.jar",
+          "name": "shared-metadata-22.9.2-all.jar",
+          "url": "shared-22.9.2-all.jar",
           "size": 4865,
-          "sha512": "2f5d17b301b3c5431d52f5903e23a7987eacbc3a2a8097e4cf683dd72a438b0bea77fece23350b0db497b864a4a75c2fd3d67fafc16c7dfe9ff81e4c7d9e8bb7",
-          "sha256": "ecf0f7242f5f6d6580e6b6f492cb89f75ec9e2fa33b36cc95715a460b7e2e9d1",
-          "sha1": "ff68f914d8986d73533d8b3c3fdde071340eea05",
-          "md5": "31724da82c3b29d837659f2c0b7963a2"
+          "sha512": "3c80142d024e02842e282a34fe4bde9dbb65faa12d68a40496913186be564d28953da32d31b667431fadaff191ea9d0b9290a0ec3129b608a95133e8940c4a95",
+          "sha256": "6946548dcd7b326f8dcb560a15b137a5d4b800f1cc46c8cb0f91f74af998ac4c",
+          "sha1": "f81a536024d49ec407ca9c57dbf22a5c2a045699",
+          "md5": "f4949c59d4f2a73e153a433a49a95cc6"
         }
       ]
     },
@@ -67,13 +67,13 @@
       ],
       "files": [
         {
-          "name": "shared.jar",
-          "url": "shared-unspecified.jar",
+          "name": "shared-22.9.2.jar",
+          "url": "shared-22.9.2.jar",
           "size": 2227,
-          "sha512": "bd6bb7cbea6fe4df03bcc84d45a040739a8428a0583b031307cc399849b83df5d295d4243d842d2dcf3fee17ab9bef4484a93dbaac854c15b93b81674fd64025",
-          "sha256": "66ac8ff3db1a935b4dc403e6a524fb8f02dd3ae585c20526481ccc3225fb57eb",
-          "sha1": "fc0ee57f5a50f0d0ef4c2cdd1db104f9a6a97269",
-          "md5": "d44d48b04e71b05d78d37c307cf8da85"
+          "sha512": "91699a33d5299166606f9d7a8a39f6205069719c02c5d2486431686718e6d5b4a56a6b913fdbd74453e5598cd359dca11d1afe3e1e72cc4c833faaa237157f5d",
+          "sha256": "5fb51924bb2238002b9c956c61407efe357e81f1a07af98607ebbc9cccb28ec2",
+          "sha1": "0368ca55f01c2512fee1b4f925f28d71c02c93b0",
+          "md5": "05bb12ebbb2b51bcd9270cb9f88213b5"
         }
       ]
     },
@@ -87,10 +87,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iosarm64/unspecified/shared-iosarm64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iosarm64/22.9.2/shared-iosarm64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iosarm64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     },
     {
@@ -103,10 +103,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iosarm64/unspecified/shared-iosarm64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iosarm64/22.9.2/shared-iosarm64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iosarm64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     },
     {
@@ -119,10 +119,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iossimulatorarm64/unspecified/shared-iossimulatorarm64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iossimulatorarm64/22.9.2/shared-iossimulatorarm64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iossimulatorarm64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     },
     {
@@ -135,10 +135,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iossimulatorarm64/unspecified/shared-iossimulatorarm64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iossimulatorarm64/22.9.2/shared-iossimulatorarm64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iossimulatorarm64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     },
     {
@@ -151,10 +151,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iosx64/unspecified/shared-iosx64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iosx64/22.9.2/shared-iosx64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iosx64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     },
     {
@@ -167,10 +167,10 @@
         "org.jetbrains.kotlin.platform.type": "native"
       },
       "available-at": {
-        "url": "../../shared-iosx64/unspecified/shared-iosx64-unspecified.module",
-        "group": "StrappUI",
+        "url": "../../shared-iosx64/22.9.2/shared-iosx64-22.9.2.module",
+        "group": "com.github.strapp-au",
         "module": "shared-iosx64",
-        "version": "unspecified"
+        "version": "22.9.2"
       }
     }
   ]
