@@ -28,7 +28,7 @@ strapp run
 Apply the strapp-ui gradle plugin
 ```
 plugins {
-    id("au.strapp.strapp-ui").version("22.9.1")
+    id("au.strapp.strapp-ui").version("22.9.2")
 }
 ```
 
