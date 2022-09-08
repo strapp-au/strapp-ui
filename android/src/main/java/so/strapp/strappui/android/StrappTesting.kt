@@ -38,16 +38,22 @@ import org.junit.runners.model.Statement
 import java.io.File
 import java.util.*
 
-class StrappTesting(
+enum class ComponentLayout {
+    WRAP_CONTENT,
+    MATCH_PARENT
+}
+
+class StrappComponent(
     private val root: Strapp = Strapp("Default", listOf({ content -> MaterialTheme(content = content) })),
     private val componentName: String,
-    private val group: String
+    private val group: String,
+    layout: ComponentLayout = ComponentLayout.WRAP_CONTENT
 ): TestRule {
 
     private val paparazzi = Paparazzi(
 //        deviceConfig = DeviceConfig.PIXEL_5,
         deviceConfig = app.cash.paparazzi.DeviceConfig(
-            screenHeight = 2560,
+            screenHeight = if (layout == ComponentLayout.WRAP_CONTENT) 1 else 2560,
             screenWidth = 1440,
             xdpi = 534,
             ydpi = 534,
@@ -62,8 +68,9 @@ class StrappTesting(
             navigation = com.android.resources.Navigation.NONAV,
             released = "October 15, 2020",
         ),
-        theme = "Theme.MaterialComponents.Light.NoActionBar",
-        renderingMode = SessionParams.RenderingMode.SHRINK,
+        theme = "android:Theme.Material.Light.NoActionBar.Fullscreen",
+        renderingMode = if (layout == ComponentLayout.WRAP_CONTENT) SessionParams.RenderingMode.V_SCROLL else SessionParams.RenderingMode.SHRINK,
+        appCompatEnabled = true
 //        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
     )
 
@@ -204,21 +211,21 @@ class StrappTesting(
 //        ))
     }
 
-    data class StrappConfig(
+    private data class StrappConfig(
         val components: StrappComponents
     )
 
-    data class StrappComponents(
+    private data class StrappComponents(
         val android: List<StrappComponent>,
         val ios: List<StrappComponent>
     )
 
-    data class StrappComponent(
+    private data class Component(
         val name: String,
         val snaps: List<StrappSnap>
     )
 
-    data class StrappSnap(
+    private data class StrappSnap(
         val label: String,
         val snap: String
     )

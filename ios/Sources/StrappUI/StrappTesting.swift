@@ -40,17 +40,22 @@ func getStrappFolder(filePath: String) -> String? {
     return nil
 }
 
+public enum ComponentLayout {
+    case WRAP_CONTENT
+    case MATCH_PARENT
+}
+
 public class StrappComponent {
     let componentName: String
     let group: String
-    let size: CGSize?
     let snapshotDirectory: URL?
     let configUrl: URL?
+    let layout: ComponentLayout
     
-    public init(name: String, group: String = "", filePath: String = #filePath, size: CGSize? = nil) {
+    public init(name: String, group: String = "", filePath: String = #filePath, layout: ComponentLayout = ComponentLayout.WRAP_CONTENT) {
         self.componentName = name
         self.group = group
-        self.size = size
+        self.layout = layout
         let strappDir = getStrappFolder(filePath: filePath)
 
         if strappDir != nil {
@@ -74,22 +79,16 @@ public class StrappComponent {
         }
     }
 
+    public func snapshot<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
+        try _snapshot(label: label, image: view().asImage(layout: self.layout))
+    }
 
-    struct SnapshotContainer<Content: View>: View {
-        var view: Content
-      var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top, spacing: 0){
-                view
-                Spacer()
-            }
-          
-          Spacer()
-        }
-      }
+    public func snapshot(label: String = "Default", view: UIViewController) throws {
+        try _snapshot(label: label, image: view.snapshot())
     }
     
-    public func snapshot<Content: View>(label: String = "Default", @ViewBuilder view: () -> Content) throws {
+    private func _snapshot(label: String, image: UIImage) throws {
+    
         print(snapshotDirectory!.absoluteString)
         assert(snapshotDirectory != nil)
         if snapshotDirectory != nil {
@@ -103,7 +102,6 @@ public class StrappComponent {
                     .appending(".png")
             )
             
-            let image = SnapshotContainer(view: view()).snapshot(size: size)
             let fileManager = FileManager.default
             let exists = fileManager.fileExists(atPath: (file.path))
             if exists {
@@ -175,28 +173,85 @@ public class StrappComponent {
 }
 
 extension UIViewController {
-    public func snapshot(width: CGFloat, height: CGFloat) -> UIImage {
-        let intrinsicBounds = view?.intrinsicContentSize
-        let targetSize = CGSize(width: width / 3, height: intrinsicBounds!.height)// height / 3))
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
-        view?.backgroundColor = .white
+    public func snapshot() -> UIImage {
+        
+        // locate far out of screen
+        view?.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
 
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let size = UIScreen.main.bounds.size
+        view?.bounds = CGRect(origin: .zero, size: size)
+        view?.sizeToFit()
+        UIApplication.shared.windows.first?.rootViewController?.view?.addSubview(view!)
 
-        return renderer.image { _ in
-            view?.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        let image = view!.asImage()
+        view?.removeFromSuperview()
+        return image
+        
+//        let targetSize = view!.intrinsicContentSize
+//        let size = CGSize(width: 480, height: targetSize.height)
+//        view?.bounds = CGRect(origin: .zero, size: size)
+//        view?.backgroundColor = .white
+//        view?.overrideUserInterfaceStyle = .light
+//
+//        let renderer = UIGraphicsImageRenderer(size: size)
+//
+//        return renderer.image { _ in
+//            view?.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+//        }
+    }
+}
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+// [!!] Uncomment to clip resulting image
+//             rendererContext.cgContext.addPath(
+//                UIBezierPath(roundedRect: bounds, cornerRadius: 20).cgPath)
+//            rendererContext.cgContext.clip()
+
+// As commented by @MaxIsom below in some cases might be needed
+// to make this asynchronously, so uncomment below DispatchQueue
+// if you'd same met crash
+//            DispatchQueue.main.async {
+                 layer.render(in: rendererContext.cgContext)
+//            }
         }
     }
 }
 
 extension SwiftUI.View {
-    public func toVC(width: CGFloat, height: CGFloat) -> UIViewController {
+    
+    public func asImage(layout: ComponentLayout) -> UIImage {
         let controller = UIHostingController(rootView: self)
-        let view = controller.view
-        let intrinsicBounds = view?.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: CGSize(width: width / 3, height: intrinsicBounds!.height))// height / 3))
-        view?.backgroundColor = .white
-        return controller
+        
+        // locate far out of screen
+        controller.view.frame = CGRect(x: 0, y: CGFloat(Int.max), width: 1, height: 1)
+        UIApplication.shared.windows.first!.rootViewController?.view.addSubview(controller.view)
+        
+        var size: CGSize = .zero
+        var origin: CGPoint = .zero
+        var height: CGFloat = 0
+        switch (layout) {
+            case .WRAP_CONTENT:
+                size = controller.sizeThatFits(in: UIScreen.main.bounds.size)
+                origin = CGPoint(x: 0, y: -(size.height * 0.5 / 2))
+                height = size.height * 0.5
+            case .MATCH_PARENT:
+                size = UIScreen.main.bounds.size
+                height = size.height
+        }
+        controller.view.bounds = CGRect(origin: origin, size: CGSize(width: size.width, height: height))
+//        controller.view.sizeToFit()
+        controller.view.backgroundColor = .white
+        controller.view.overrideUserInterfaceStyle = .light
+        let image = controller.view.asImage()
+        controller.view.removeFromSuperview()
+        return image
+    }
+    
+    public func toVC() -> UIViewController {
+        return UIHostingController(rootView: self.edgesIgnoringSafeArea(.all))
     }
     
     public func snapshot(size: CGSize? = nil, backgroundColor: UIColor = .white) -> UIImage {

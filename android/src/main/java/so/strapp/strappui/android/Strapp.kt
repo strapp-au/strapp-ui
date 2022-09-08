@@ -41,7 +41,7 @@ class ComposableStrappExecutor <T> (
     val group: String,
     val view: @Composable (props: T) -> Unit,
 ): TestRule {
-    private val s = StrappTesting(
+    private val s = StrappComponent(
         root = strapp,
         componentName = componentName,
         group = group
@@ -73,7 +73,7 @@ class ViewStrappExecutor <T> (
     val group: String,
     val view: (props: T) -> View,
 ): TestRule {
-    private val s = StrappTesting(
+    private val s = StrappComponent(
         root = strapp,
         componentName = componentName,
         group = group
