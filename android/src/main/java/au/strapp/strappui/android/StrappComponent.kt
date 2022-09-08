@@ -1,37 +1,14 @@
-package so.strapp.strappui.android
+package au.strapp.strappui.android
 
 import au.strapp.strappui.shared.StrappConfigBuilder
-import android.app.Activity
-import android.graphics.Bitmap
-import android.os.Environment.DIRECTORY_PICTURES
-import android.os.Environment.getExternalStoragePublicDirectory
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.ComponentActivity
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.*
-import androidx.compose.ui.test.onRoot
-import androidx.core.graphics.applyCanvas
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
-import app.cash.paparazzi.Environment
-import app.cash.paparazzi.Paparazzi
-import app.cash.paparazzi.Snapshot
-import app.cash.paparazzi.TestName
+import app.cash.paparazzi.*
 import com.android.ide.common.rendering.api.SessionParams
-import com.android.resources.ScreenOrientation
+import com.android.resources.*
 import com.google.gson.Gson
-import org.junit.Rule
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -44,28 +21,27 @@ enum class ComponentLayout {
 }
 
 class StrappComponent(
-    private val root: Strapp = Strapp("Default", listOf({ content -> MaterialTheme(content = content) })),
-    private val componentName: String,
+    private val name: String,
     private val group: String,
     layout: ComponentLayout = ComponentLayout.WRAP_CONTENT
 ): TestRule {
 
     private val paparazzi = Paparazzi(
 //        deviceConfig = DeviceConfig.PIXEL_5,
-        deviceConfig = app.cash.paparazzi.DeviceConfig(
+        deviceConfig = DeviceConfig(
             screenHeight = if (layout == ComponentLayout.WRAP_CONTENT) 1 else 2560,
             screenWidth = 1440,
             xdpi = 534,
             ydpi = 534,
             orientation = ScreenOrientation.PORTRAIT,
-            density = com.android.resources.Density.DPI_560,
-            ratio = com.android.resources.ScreenRatio.NOTLONG,
-            size = com.android.resources.ScreenSize.NORMAL,
-            keyboard = com.android.resources.Keyboard.NOKEY,
-            touchScreen = com.android.resources.TouchScreen.FINGER,
-            keyboardState = com.android.resources.KeyboardState.SOFT,
+            density = Density.DPI_560,
+            ratio = ScreenRatio.NOTLONG,
+            size = ScreenSize.NORMAL,
+            keyboard = Keyboard.NOKEY,
+            touchScreen = TouchScreen.FINGER,
+            keyboardState = KeyboardState.SOFT,
             softButtons = false,
-            navigation = com.android.resources.Navigation.NONAV,
+            navigation = Navigation.NONAV,
             released = "October 15, 2020",
         ),
         theme = "android:Theme.Material.Light.NoActionBar.Fullscreen",
@@ -125,7 +101,7 @@ class StrappComponent(
         paparazziFile.delete()
 
         updateConfig(StrappConfigBuilder().addSnapshot(
-            componentName,
+            name,
             group,
             label,
             strappFile.absolutePath,
@@ -176,7 +152,7 @@ class StrappComponent(
         paparazziFile.delete()
 
         updateConfig(StrappConfigBuilder().addSnapshot(
-            componentName,
+            name,
             group,
             label,
             strappFile.absolutePath,

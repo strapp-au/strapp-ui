@@ -1,4 +1,4 @@
-package so.strapp.strappui.android;
+package au.strapp.strappui.android;
 
 import android.app.Instrumentation;
 import android.app.UiAutomation;

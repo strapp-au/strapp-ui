@@ -1,4 +1,4 @@
-package so.strapp.strappui.android
+package au.strapp.strappui.android
 
 //import android.content.Context
 //import android.util.AttributeSet
