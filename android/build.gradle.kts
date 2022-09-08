@@ -115,7 +115,7 @@ afterEvaluate {
 //}
 
 dependencies {
-    implementation(project(":core"))
+    implementation(project(":shared"))
 
 //    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.jar"))))
 

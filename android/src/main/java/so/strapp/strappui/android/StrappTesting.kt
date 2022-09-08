@@ -1,6 +1,6 @@
 package so.strapp.strappui.android
 
-import au.strapp.core.StrappConfigBuilder
+import au.strapp.strappui.shared.StrappConfigBuilder
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Environment.DIRECTORY_PICTURES

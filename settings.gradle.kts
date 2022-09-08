@@ -12,7 +12,7 @@ include(":android")
 project(":android").name = "strapp-ui"
 include(":shared")
 project(":shared").projectDir = file("shared")
-include(":StrappPlugin")
+include(":android-plugin")
 
 //include(":paparazzi")
 //project(":paparazzi").projectDir = file("third-party/paparazzi")

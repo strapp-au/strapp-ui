@@ -44,11 +44,11 @@
         {
           "name": "shared.klib",
           "url": "shared-iosx64-unspecified.klib",
-          "size": 20754,
-          "sha512": "5df8faf07578dbaaad6a6c254a547df2409e181058ce58c2296ea8d28afbcb1e72cd917d1f1b5672190cf21ede551478a03727ece48b01354949cbcf15c8c95e",
-          "sha256": "2801470341b36e99a9d20f42cee85ea47dbf6c01229859df586e23051f3eb3aa",
-          "sha1": "9f4602a4e2d6a0249094b50ee37095974d7939b0",
-          "md5": "2e83fa4ee6f3db8d97e1446e64da0f6c"
+          "size": 18379,
+          "sha512": "52b52795c4c46a0fb75c4d6001f12c513e4d204d223f989d0f1c43108426d87acab8545ad925e62867a3ebad1591bb5e50aa3a62f51e4fb9a358c7cd391dfdef",
+          "sha256": "48fbe5ba090fe8dbe3e8c8d38d59091ce0e7daee53c9a262e3ad90834d09af26",
+          "sha1": "10f4e25aed31f7ef04506860a3728220660f7a55",
+          "md5": "3976882d047974e54ed0fc8e7cd0a31a"
         }
       ]
     },
@@ -81,11 +81,11 @@
         {
           "name": "shared-iosx64-metadata.jar",
           "url": "shared-iosx64-unspecified-metadata.jar",
-          "size": 4598,
-          "sha512": "6ebadc061d1258a4afb808cdd065df096a08201f7cefa536ede3eb3cc23b4e2d4d236208fa228011447ac42136c2f159d89712c99dccd5ea86dfa4011823e11a",
-          "sha256": "f392c846293d3db53bf263241e7110e3a3590d5a10b69ef4d9a52bf2c8503a76",
-          "sha1": "f7e2ae650010a7faa9bf2816216982917f434426",
-          "md5": "3b42d36331797a7b82c9aef0ce49b852"
+          "size": 261,
+          "sha512": "58a54b33a606466756ddad3e37471b760365011a0eddeb3a3252334c0af0bdd8e129e32c0aed78a2d9f04f3b801f0929a6d7aaaa508c1aa4c43cc96bc2a0ac62",
+          "sha256": "c95ffed10b9c53f5077641cf482d101b9342f3cdb8f22caee5c967de1de0dcee",
+          "sha1": "7f0fc807132ee1522171e4401a4fc8054f00461b",
+          "md5": "a5fcf9eb085d239a0a21146013c985e0"
         }
       ]
     }
