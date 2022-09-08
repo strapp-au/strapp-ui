@@ -28,7 +28,7 @@ strapp run
 Apply the strapp-ui gradle plugin
 ```
 plugins {
-    id("au.strapp.strapp-ui").version("22.9.0")
+    id("au.strapp.strapp-ui").version("22.9.1")
 }
 ```
 
@@ -48,9 +48,10 @@ Now you can write a unit test for each UI component state you want to capture in
 class ExampleTests {
 
     @get:Rule
-    val strapp = StrappTesting(
+    val strapp = StrappComponent(
         componentName = "Example",
-        group = "My group"
+        group = "My group",
+        layout = ComponentLayout.MATCH_PARENT // defaults to WRAP_CONTENT
     )
 
     // Jetpack Compose
@@ -100,7 +101,8 @@ class MyButtonTest: XCTestCase {
     
     let strapp = StrappTesting(
         componentName: "My Button",
-        group: "My group"
+        group: "My group",
+        layout: .MATCH_PARENT // defaults to .WRAP_CONTENT
     )
     
     // SwiftUI
