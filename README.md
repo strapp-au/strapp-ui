@@ -13,12 +13,7 @@ npm install -g strapp-cli
 
 Now you can run commands like;
 
-To take snapshots
-```
-strapp build
-```
-
-To run the local server after building
+To run the local instance after building
 ```
 strapp run 
 ```
@@ -56,7 +51,7 @@ class ExampleTests {
     // Jetpack Compose
     @Test
     fun composeView() {
-        component.snapshot(label = "Default") {
+        component.snapshot(label = "With Jetpack Compose") {
             CustomButton(text = "This is my default button")
         }
     }
@@ -64,7 +59,7 @@ class ExampleTests {
     // Layout Resource View
     @Test
     fun resourceView() {
-        component.snapshot(label = "Default", layout = R.layout.example) { view ->
+        component.snapshot(label = "With XML Layout", layout = R.layout.example) { view ->
             view.findViewById<TextView>(R.id.my_text_view).text = "Set the text of something in the view"
         }
     }
