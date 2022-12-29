@@ -28,7 +28,7 @@ strapp run
 Apply the strapp-ui gradle plugin
 ```
 plugins {
-    id("au.strapp.strapp-ui").version("22.9.2")
+    id("au.strapp.strapp-ui").version("22.12.2")
 }
 ```
 
@@ -37,7 +37,7 @@ Add Jitpack repository to your module
  repositories {
    // ...
    maven {
-     url 'https://jitpack.io'
+     url = uri("https://jitpack.io")
    }
  }
  ```
@@ -48,16 +48,15 @@ Now you can write a unit test for each UI component state you want to capture in
 class ExampleTests {
 
     @get:Rule
-    val strapp = StrappComponent(
-        componentName = "Example",
+    val component = StrappComponent(
+        name = "Example",
         group = "My group",
-        layout = ComponentLayout.MATCH_PARENT // defaults to WRAP_CONTENT
     )
 
     // Jetpack Compose
     @Test
     fun composeView() {
-        strapp.snapshot(label = "Default") {
+        component.snapshot(label = "Default") {
             CustomButton(text = "This is my default button")
         }
     }
@@ -65,7 +64,7 @@ class ExampleTests {
     // Layout Resource View
     @Test
     fun resourceView() {
-        strapp.snapshot(label = "Default", layout = R.layout.example) { view ->
+        component.snapshot(label = "Default", layout = R.layout.example) { view ->
             view.findViewById<TextView>(R.id.my_text_view).text = "Set the text of something in the view"
         }
     }
@@ -73,17 +72,39 @@ class ExampleTests {
 }
 ```
 
-Add a `strapp.yml` file to your project root directory.
+Run the Strapp tests to record your snapshots
 ```
-android:
-  module: app:components
+./gradlew strappConnectedDeviceRecord
+```
+
+To run in a Gradle Managed Device for consistency and speed (recommended), add a managed device named `strappDevice` to your projects build.gradle file
+```
+android {
+    // ...
+    
+    testOptions {
+        managedDevices {
+            devices {
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("strappDevice").apply {
+                    device = "Pixel 5"
+                    apiLevel = 30
+                    // To include Google services, use "google".
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
+    
+    // ...
+}
+```
+and then run the managed device record command
+```
+./gradlew strappManagedDeviceRecord
 ```
 
 In terminal within your project root directory run;
-`strapp build` to take your snapshots and prepare the local data,
-`strapp run` to run to local server - accessible at http://localhost:3001
-
-Strapp currently can only be added to an Android Library module. We recommend that you create a new module in Android Studio for your UI components if you have not already.
+`strapp run` to run to local Strapp instance to see your component snapshots - accessible at http://localhost:3001
 
 
 ## iOS 
@@ -92,6 +113,7 @@ In XCode: File -> Add packages...
 ```
 git@github.com:strapp-au/strapp-ui.git
 ```
+and select the latest version `22.12.2`
 
 Now you can add a unit test for each UI component state which you would like to take snapshots of.
 ```
@@ -99,41 +121,31 @@ import StrappUI
 
 class MyButtonTest: XCTestCase {
     
-    let strapp = StrappTesting(
-        componentName: "My Button",
+    let component = StrappComponent(
+        name: "My Button",
         group: "My group",
-        layout: .MATCH_PARENT // defaults to .WRAP_CONTENT
     )
     
     // SwiftUI
     func testMyButtonSwiftUI() throws {
-        try strapp.snapshot(label: "With SwiftUI") {
+        try component.snapshot(label: "With SwiftUI") {
           MyButton(text: "Testing")
         }
     }
     
     // UIViewController
     func testMyButtonViewController() throws {
-        try strapp.snapshot(label: "With View Controller", view: MyViewController())
+        try component.snapshot(label: "With View Controller", view: MyViewController())
     }
     
 }
 ```
+Run these tests within XCode and your snapshots will be generated and ready to go.
 
-Add a `strapp.yml` file to your project root directory.
-```
-ios:
-  project: StrappExample.xcodeproj
-  scheme: StrappExample
-  target: StrappExampleTests
-  simulator: iPhone 13 Pro
-  OS: 15.4
-```
+Please note that Strapp currently relies on git for future features and creating the build folder. Make sure that your project is under git version control for compatibility.
 
 In terminal within your project root directory run;
 
-`strapp build` to take your snapshots and prepare the local data,
-
-`strapp run` to run to local server - accessible at http://localhost:3001
+`strapp run` to run a local Strapp instance to see your snapshots - accessible at http://localhost:3001
 
 
