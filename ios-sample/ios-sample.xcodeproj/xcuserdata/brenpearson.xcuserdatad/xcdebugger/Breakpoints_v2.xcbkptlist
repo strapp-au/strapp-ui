@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "C4D21568-CE50-4BDD-A74A-2CB85CA465E9"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E9CE2BF-FACD-4F0E-BE72-E8567698B646"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios-sampleTests/ios_sampleTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "ios_sampleTests"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "12268815-7050-4F92-B4E9-245830978ED3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios-sampleTests/ios_sampleTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "ios_sampleTests"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "12268815-7050-4F92-B4E9-245830978ED3 - bc5e8c1eb14b7e48"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ios_sampleTests.ios_sampleTests.component.getter : ios_sampleTests.StrappComponent"
+                  moduleName = "ios-sampleTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenpearson/Repositories/strapp-ui/ios-sample/ios-sampleTests/ios_sampleTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "12268815-7050-4F92-B4E9-245830978ED3 - bfdcaa6b3661f13d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ios_sampleTests.ios_sampleTests.init(invocation: Swift.Optional&lt;__C.NSInvocation&gt;) -&gt; ios_sampleTests.ios_sampleTests"
+                  moduleName = "ios-sampleTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenpearson/Repositories/strapp-ui/ios-sample/ios-sampleTests/ios_sampleTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "12268815-7050-4F92-B4E9-245830978ED3 - ae7f0196b148d09d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ios_sampleTests.ios_sampleTests.init(selector: ObjectiveC.Selector) -&gt; ios_sampleTests.ios_sampleTests"
+                  moduleName = "ios-sampleTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenpearson/Repositories/strapp-ui/ios-sample/ios-sampleTests/ios_sampleTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "12268815-7050-4F92-B4E9-245830978ED3 - a7c4a29f900c0efb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ios_sampleTests.ios_sampleTests.init() -&gt; ios_sampleTests.ios_sampleTests"
+                  moduleName = "ios-sampleTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenpearson/Repositories/strapp-ui/ios-sample/ios-sampleTests/ios_sampleTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

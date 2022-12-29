@@ -14,16 +14,11 @@ func searchPathForStrappFolder(folder: String) -> Bool {
     do {
         let children = try fm.contentsOfDirectory(atPath: folder)
         for child in children {
-            if (child == ".strapp") {
-                print("Matched: " + child)
+            if (child == ".git") {
                 return true
-            } else {
-                print("Not Matched: " + child)
             }
         }
-    } catch {
-        return false
-    }
+    } catch {}
     
     return false
 }
@@ -33,7 +28,11 @@ func getStrappFolder(filePath: String) -> String? {
     for _ in 0...5 {
         file.deleteLastPathComponent()
         if (searchPathForStrappFolder(folder: file.path)) {
-            return file.appendingPathComponent(".strapp").path
+            let strappFile = file.appendingPathComponent(".strapp").path
+            do {
+                try FileManager.default.createDirectory(atPath: strappFile, withIntermediateDirectories: true, attributes: nil)
+            } catch {}
+            return strappFile
         }
     }
     return nil
@@ -51,6 +50,9 @@ public class StrappComponent {
     let configUrl: URL?
     let layout: ComponentLayout
     
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
+    
     public init(name: String, group: String = "", filePath: String = #filePath, layout: ComponentLayout = ComponentLayout.WRAP_CONTENT) {
         self.componentName = name
         self.group = group
@@ -58,7 +60,7 @@ public class StrappComponent {
         let strappDir = getStrappFolder(filePath: filePath)
 
         if strappDir != nil {
-            self.snapshotDirectory = URL(string: strappDir! + "/snapshots/ios")
+            self.snapshotDirectory = URL(string: strappDir! + "/snapshots/ios/images")
             self.configUrl = URL(fileURLWithPath: strappDir! + "/config.json", isDirectory: false)
             
 //            do {
@@ -108,25 +110,23 @@ public class StrappComponent {
             } else {
                fileManager.createFile(atPath: file.path, contents: image.pngData()!, attributes: [:])
             }
-
-            let configBuilder = StrappConfigBuilder()
             
             do {
                 let config = try getConfig()
 
                 if config != nil {
-                    let newConfig: String = configBuilder.addSnapshot(
+                    let newConfig: String = addSnapshot(
                         componentName: self.componentName,
                         componentGroup: self.group,
                         snapshotLabel: label,
-                        snapshotPath: file.path,
+                        snapshotPath: "snapshots/ios/images/" + file.lastPathComponent,
                         configString: config!
                     )
                     writeConfig(config: newConfig)
                 }
                 
             } catch {
-                let json = try JSONEncoder().encode(
+                let json = try encoder.encode(
                     StrappConfig(
                         components: [
                             Component(name: componentName, group: group, snapshots: [Snapshot(label: label, type: "png", src: file.path)])
@@ -152,6 +152,34 @@ public class StrappComponent {
         } catch {
             
         }
+    }
+    
+    private func addSnapshot(componentName: String, componentGroup: String, snapshotLabel: String, snapshotPath: String, configString: String) -> String {
+        do {
+            var strappConfig = try decoder.decode(StrappConfig.self, from: configString.data(using: .utf8)!)
+            
+            let snapshot = Snapshot(label: snapshotLabel, type: "png", src: snapshotPath)
+            
+            if var component = strappConfig.components.enumerated().first(where: {$0.element.name == componentName}) {
+                
+                if let snap = component.element.snapshots.enumerated().first(where: {$0.element.label == snapshotLabel}) {
+                    component.element.snapshots[snap.offset] = snapshot
+                } else {
+                    component.element.snapshots.append(snapshot)
+                }
+                
+                strappConfig.components[component.offset] = component.element
+            } else {
+                strappConfig.components.append(Component(name: componentName, group: componentGroup, snapshots: [snapshot]))
+            }
+            
+            let json = try encoder.encode(strappConfig)
+            return String(decoding: json, as: UTF8.self).replacingOccurrences(of: "\\", with: "")
+        } catch {
+            
+        }
+        
+        return ""
     }
     
     struct StrappConfig: Codable {
