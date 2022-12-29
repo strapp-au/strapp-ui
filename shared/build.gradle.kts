@@ -13,6 +13,14 @@ kotlin {
 
     val xcFramework = XCFramework("Shared")
 
+    multiplatformSwiftPackage {
+        swiftToolsVersion("5.7.1")
+        targetPlatforms {
+            iOS { v("14") }
+            iosSimulatorArm64()
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
