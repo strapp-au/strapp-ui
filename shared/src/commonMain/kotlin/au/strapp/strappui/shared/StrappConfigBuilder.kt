@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
-import java.lang.Exception
 
 class StrappConfigBuilder {
 
@@ -19,7 +18,7 @@ class StrappConfigBuilder {
         var c: List<StrappComponent>
         try {
             c = if (configString.isNotEmpty()) Json.decodeFromString<StrappConfig>(configString).components else listOf()
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             c = listOf()
         }
 

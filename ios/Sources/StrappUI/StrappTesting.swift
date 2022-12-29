@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import Shared
 
 func searchPathForStrappFolder(folder: String) -> Bool {
     let fm = FileManager.default
