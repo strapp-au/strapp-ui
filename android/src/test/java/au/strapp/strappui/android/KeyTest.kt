@@ -2,15 +2,16 @@ package so.strapp.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import au.strapp.strappui.android.StrappComponent
 import org.junit.Rule
 import org.junit.Test
-import au.strapp.strappui.android.StrappTesting
 
 class KeyTest {
 
     @get:Rule
-    val strapp = StrappTesting(
-        componentName = "Key"
+    val strapp = StrappComponent(
+        name = "Key",
+        group = "Component"
     )
 
     @Composable
@@ -20,7 +21,7 @@ class KeyTest {
 
     @Test
     fun default() {
-        strapp.snap("Default") {
+        strapp.snapshot("Default") {
             Key()
         }
     }
