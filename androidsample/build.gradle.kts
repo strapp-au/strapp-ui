@@ -2,6 +2,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("au.strapp.strapp-ui").version("22.12.1")
 }
 
 android {
@@ -88,12 +89,3 @@ dependencies {
     implementation("androidx.test.espresso:espresso-core:3.5.0")
     androidTestUtil("androidx.test.services:test-services:1.4.2")
 }
-
-buildscript {
-    val pluginVersion = project.properties["strapp_version"]
-    dependencies {
-        classpath(files("../android-plugin/build/libs/android-plugin-${pluginVersion}.jar"))
-    }
-}
-
-apply<au.strapp.strappplugin.StrappPlugin>()
