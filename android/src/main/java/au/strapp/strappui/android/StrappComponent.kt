@@ -1,283 +1,222 @@
 package au.strapp.strappui.android
 
-import au.strapp.strappui.shared.StrappConfigBuilder
+import android.content.ContentProviderClient
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
+import android.os.ParcelFileDescriptor
+import android.os.RemoteException
 import android.view.LayoutInflater
 import android.view.View
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.*
-import app.cash.paparazzi.*
-import com.android.ide.common.rendering.api.SessionParams
-import com.android.resources.*
-import com.google.gson.Gson
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.test.annotation.ExperimentalTestApi
+import androidx.test.core.graphics.writeToTestStorage
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.services.storage.TestStorage
+import androidx.test.services.storage.TestStorageException
+import au.strapp.strappui.shared.StrappConfigBuilder
+import org.junit.rules.RunRules
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import java.io.File
+import java.io.BufferedInputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.*
 
-enum class ComponentLayout {
-    WRAP_CONTENT,
-    MATCH_PARENT
-}
 
-class StrappComponent(
+@ExperimentalTestApi class StrappComponent(
     private val name: String,
-    private val group: String,
-    layout: ComponentLayout = ComponentLayout.WRAP_CONTENT
+    private val group: String
 ): TestRule {
 
-    private val paparazzi = Paparazzi(
-//        deviceConfig = DeviceConfig.PIXEL_5,
-        deviceConfig = DeviceConfig(
-            screenHeight = if (layout == ComponentLayout.WRAP_CONTENT) 1 else 2560,
-            screenWidth = 1440,
-            xdpi = 534,
-            ydpi = 534,
-            orientation = ScreenOrientation.PORTRAIT,
-            density = Density.DPI_560,
-            ratio = ScreenRatio.NOTLONG,
-            size = ScreenSize.NORMAL,
-            keyboard = Keyboard.NOKEY,
-            touchScreen = TouchScreen.FINGER,
-            keyboardState = KeyboardState.SOFT,
-            softButtons = false,
-            navigation = Navigation.NONAV,
-            released = "October 15, 2020",
-        ),
-        theme = "android:Theme.Material.Light.NoActionBar.Fullscreen",
-        renderingMode = if (layout == ComponentLayout.WRAP_CONTENT) SessionParams.RenderingMode.V_SCROLL else SessionParams.RenderingMode.SHRINK,
-        appCompatEnabled = true
-//        snapshotRootDirectory = File(BuildConfig.PROJECT_DIR, ".strapp/snaps/android")
-    )
+    private val composeTestRule = createComposeRule()
+    lateinit var testName: TestNames
 
-    lateinit var testName: TestName
+    private val snapshotDir = "snapshots/android/images"
 
-    fun snapshot(
-        label: String = "Default",
-        layout: Int,
-        bind: (view: View) -> Unit = {}
-    ) {
-        snapView(label, layout, bind)
-    }
 
-    private fun getInflater(): LayoutInflater {
-        return paparazzi.layoutInflater
-    }
-
-    private val context get() = paparazzi.context
-
-    private fun snapView(label: String, layout: Int, bind: (view: View) -> Unit = {}) {
-        paparazzi.inflate<View>(layout).let { root ->
-            bind(root)
-            snapshot(label, root)
-        }
-    }
+    private val contentResolver = InstrumentationRegistry.getInstrumentation().targetContext.contentResolver
+    private val configUri = TestStorage.getOutputFileUri("strapp-output/config.json")
 
     fun snapshot(
         label: String = "Default",
         composable: @Composable () -> Unit
     ) {
-//        if (root.themes.isNotEmpty()) {
-//            root.themes.forEach {
-//                snapView(label,
-//                    { it(content = view) }
-//                )
-//            }
-//        } else {
-//            paparazzi.snapshot(label, composable)
-//        }
 
-//        val fileName =
-//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-        paparazzi.snapshot(
-            name = label,
-            composable = composable
-        )
+        val fileName = toFileName(label, testName)
 
-        val fileName = toFileName(label, testName, extension = "png")
-        val paparazziFile = File("${paparazziSnapshotDir}/${fileName}")
-        val strappFile = File("${snapDir}/${fileName}")
-        paparazziFile.copyTo(strappFile)
-        paparazziFile.delete()
-
-        updateConfig(StrappConfigBuilder().addSnapshot(
-            name,
-            group,
-            label,
-            strappFile.absolutePath,
-            config
-        ))
-//        updateConfig(StrappConfig(
-//            components = StrappComponents(
-//                ios = c.components.ios,
-//                android = arrayListOf<StrappComponent>().apply {
-//                    this.addAll(c.components.android)
-//                    val component = this.find {
-//                        it.name == componentName
-//                    }
-//                    this.removeIf { it.name == componentName }
-//                    this.add(StrappComponent(
-//                        name = componentName,
-//                        snaps = arrayListOf<StrappSnap>().apply {
-//                            component?.snaps?.let { this.addAll(it) }
-//                            this.removeIf { it.label == label }
-//                            this.add(
-//                                0,
-//                                StrappSnap(
-//                                    label = label,
-//                                    snap = "$snapDir/$fileName"
-//                                )
-//                            )
-//                        }
-//                    ))
-//                    this.sortBy { it.name }
-//                }
-//            )
-//        ))
-    }
-
-    fun snapshot(label: String, view: View) {
-//        val fileName =
-//            "${componentName}_${label}".lowercase(Locale.US).replace("\\s".toRegex(), "_")
-
-        paparazzi.snapshot(
-            view = view,
-            name = label
-        )
-        val fileName = toFileName(label, testName, extension = "png")
-        val paparazziFile = File("${paparazziSnapshotDir}/${fileName}")
-        val strappFile = File("${snapDir}/${fileName}")
-        strappFile.delete()
-        paparazziFile.copyTo(strappFile)
-        paparazziFile.delete()
-
-        updateConfig(StrappConfigBuilder().addSnapshot(
-            name,
-            group,
-            label,
-            strappFile.absolutePath,
-            config
-        ))
-//        updateConfig(StrappConfig(
-//            components = StrappComponents(
-//                ios = c.components.ios,
-//                android = arrayListOf<StrappComponent>().apply {
-//                    this.addAll(c.components.android)
-//                    val component = this.find {
-//                        it.name == componentName
-//                    }
-//                    this.removeIf { it.name == componentName }
-//                    this.add(StrappComponent(
-//                        name = componentName,
-//                        snaps = arrayListOf<StrappSnap>().apply {
-//                            component?.snaps?.let { this.addAll(it) }
-//                            this.removeIf { it.label == label }
-//                            this.add(
-//                                0,
-//                                StrappSnap(
-//                                    label = label,
-//                                    snap =
-//                                )
-//                            )
-//                        }
-//                    ))
-//                    this.sortBy { it.name }
-//                }
-//            )
-//        ))
-    }
-
-    private data class StrappConfig(
-        val components: StrappComponents
-    )
-
-    private data class StrappComponents(
-        val android: List<StrappComponent>,
-        val ios: List<StrappComponent>
-    )
-
-    private data class Component(
-        val name: String,
-        val snaps: List<StrappSnap>
-    )
-
-    private data class StrappSnap(
-        val label: String,
-        val snap: String
-    )
-
-    private val gson = Gson()
-
-    private val projectDir = System.getProperty("strapp.test.project_root")
-    private val moduleDir = System.getProperty("strapp.test.module_root")
-    private val snapDir = "${projectDir}/.strapp/snapshots/android/images"
-    private val configPath = File("$projectDir/.strapp/config.json")
-    private val paparazziSnapshotDir = "${moduleDir}/src/test/snapshots/images"
-
-    init {
-        configPath.parentFile?.mkdirs()
-        configPath.createNewFile()
-    }
-
-    private val config: String get() =
-        configPath.let {
-            it.parentFile?.mkdirs()
-            it.createNewFile()
-            it.readText()
+        composeTestRule.setContent {
+            Box(Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .testTag("CaptureNode")
+                ) {
+                    composable()
+                }
+            }
         }
+        composeTestRule.onNodeWithTag("CaptureNode")
+            .captureToImage()
+            .asAndroidBitmap()
+            .writeToTestStorage("strapp-output/$snapshotDir/$fileName")
+
+        val output = getOutputStream(configUri, contentResolver, true)?.close()
+        val configInput = getInputStream(configUri, contentResolver)?.let {
+            val contents = it.reader().readText()
+            it.close()
+            contents
+        }
+
+        updateConfig(StrappConfigBuilder().addSnapshot(
+            name,
+            group,
+            label,
+            "$snapshotDir/$fileName.png",
+            configInput?: ""
+        ))
+    }
+
+    fun <T: View> snapshot(label: String, viewFactory: (Context) -> T) {
+        snapshot(label = label, composable = {
+            AndroidView(
+                modifier = Modifier.wrapContentSize(),
+                factory = viewFactory,
+                update = {}
+            )
+        })
+    }
+
+    fun snapshot(label: String, layout: Int, bind: (View) -> Unit = {}) {
+        snapshot(label = label, composable = {
+            AndroidView(
+                factory = { context ->
+                    LayoutInflater.from(context)
+                        .inflate(layout, null)
+                        .apply {
+                            bind(this)
+                        }
+                },
+                update = {}
+            )
+        })
+    }
+
     private fun updateConfig(config: String) {
-        configPath.apply {
-            this.parentFile?.mkdirs()
-            this.createNewFile()
-            this.writeText(config)
+        getOutputStream(configUri, contentResolver)?.let {
+            it.write(config.toByteArray())
+            it.close()
         }
     }
 
     private fun toFileName(
         name: String,
-        testName: TestName,
-        delimiter: String = "_",
-        extension: String
+        testName: TestNames,
+        delimiter: String = "_"
     ): String {
-        val formattedLabel = if (name != null) {
-            "$delimiter${name.toLowerCase(Locale.US).replace("\\s".toRegex(), delimiter)}"
-        } else {
-            ""
-        }
-        return "${testName.packageName}${delimiter}${testName.className}${delimiter}${testName.methodName}$formattedLabel.$extension"
+        val formattedLabel = "$delimiter${name.lowercase(Locale.US).replace("\\s".toRegex(), delimiter)}"
+        return "${testName.packageName}${delimiter}${testName.className}${delimiter}${testName.methodName}$formattedLabel"
     }
 
-    private fun Description.toTestName(): TestName {
+    private fun Description.toTestName(): TestNames {
         val fullQualifiedName = className
         val packageName = fullQualifiedName.substringBeforeLast('.', missingDelimiterValue = "")
         val className = fullQualifiedName.substringAfterLast('.')
-        return TestName(packageName, className, methodName)
+        return TestNames(packageName, className, methodName)
     }
 
-    fun prepare(description: Description) {
-        paparazzi.prepare(description)
-    }
-
-    fun close() {
-        paparazzi.close()
-    }
+    data class TestNames (
+        val packageName: String,
+        val className: String,
+        val methodName: String,
+    )
 
     override fun apply(base: Statement, description: Description): Statement {
-        return object : Statement() {
-            override fun evaluate() {
-                try {
-                    paparazzi.prepare(description)
-                    testName = description.toTestName()
-                    base.evaluate()
-                } finally {
-                    paparazzi.close()
+        testName = description.toTestName()
+        return RunRules(base, listOf(composeTestRule), description)
+    }
 
-                    val paparazziImagesDir = File(paparazziSnapshotDir)
-                    if (paparazziImagesDir.listFiles()?.isEmpty() == true) {
-                        paparazziImagesDir.parentFile?.deleteRecursively()
-                    }
-                }
-            }
+    /**
+     * Gets the input stream for a given Uri.
+     *
+     * @param uri The Uri for which the InputStream is required.
+     */
+    @Throws(FileNotFoundException::class)
+    fun getInputStream(uri: Uri, contentResolver: ContentResolver?): InputStream? {
+        var providerClient: ContentProviderClient? = null
+        return try {
+            providerClient = contentResolver?.let { makeContentProviderClient(it, uri) }
+            // Assignment to a variable is required. Do not inline.
+            val pfd = providerClient?.openFile(uri, "r")
+            // Buffered to improve performance.
+            BufferedInputStream(ParcelFileDescriptor.AutoCloseInputStream(pfd))
+        } catch (re: RemoteException) {
+            throw TestStorageException("Unable to access content provider: $uri", re)
+        } finally {
+            providerClient?.release()
         }
+    }
+
+    /**
+     * Gets the output stream for a given Uri.
+     *
+     *
+     * The returned OutputStream is essentially a [java.io.FileOutputStream] which likely
+     * should be buffered to avoid `UnbufferedIoViolation` when running under strict mode.
+     *
+     * @param uri The Uri for which the OutputStream is required.
+     */
+    @Throws(FileNotFoundException::class)
+    fun getOutputStream(uri: Uri, contentResolver: ContentResolver?): OutputStream? {
+        return getOutputStream(uri, contentResolver, false)
+    }
+
+    /**
+     * Gets the output stream for a given Uri.
+     *
+     *
+     * The returned OutputStream is essentially a [java.io.FileOutputStream] which likely
+     * should be buffered to avoid `UnbufferedIoViolation` when running under strict mode.
+     *
+     * @param uri The Uri for which the OutputStream is required.
+     * @param append if true, then the lines will be added to the end of the file rather than
+     * overwriting.
+     */
+    @Throws(FileNotFoundException::class)
+    fun getOutputStream(
+        uri: Uri, contentResolver: ContentResolver?, append: Boolean
+    ): OutputStream? {
+        var providerClient: ContentProviderClient? = null
+        return try {
+            providerClient = contentResolver?.let { makeContentProviderClient(it, uri) }
+            val mode = if (append) "wa" else "w"
+            ParcelFileDescriptor.AutoCloseOutputStream(providerClient?.openFile(uri, mode))
+        } catch (re: RemoteException) {
+            throw TestStorageException("Unable to access content provider: $uri", re)
+        } finally {
+            providerClient?.release()
+        }
+    }
+
+    private fun makeContentProviderClient(
+        resolver: ContentResolver, uri: Uri
+    ): ContentProviderClient {
+        return resolver.acquireContentProviderClient(uri)
+            ?: throw TestStorageException(
+                String.format(
+                    "No content provider registered for: %s. Are all test services apks installed?",
+                    uri
+                )
+            )
     }
 }

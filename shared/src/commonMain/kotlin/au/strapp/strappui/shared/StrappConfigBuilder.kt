@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import java.lang.Exception
 
 class StrappConfigBuilder {
 
@@ -15,7 +16,13 @@ class StrappConfigBuilder {
         configString: String
     ): String {
 
-        val c = if (configString.isNotEmpty()) Json.decodeFromString<StrappConfig>(configString).components else listOf()
+        var c: List<StrappComponent>
+        try {
+            c = if (configString.isNotEmpty()) Json.decodeFromString<StrappConfig>(configString).components else listOf()
+        } catch (e: Exception) {
+            c = listOf()
+        }
+
         val components = arrayListOf<StrappComponent>().apply {
             this.addAll(c)
             val component = this.find {
@@ -35,6 +42,11 @@ class StrappConfigBuilder {
                             src = snapshotPath
                         )
                     )
+                    this.sortWith(Comparator { a, b -> when {
+                        a.label == "Default" -> -1
+                        b.label == "Default" -> 1
+                        else -> compareValues(a.label, b.label)
+                    }})
                 }
             ))
             this.sortBy { it.name }

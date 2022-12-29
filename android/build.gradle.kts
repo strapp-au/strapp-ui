@@ -1,10 +1,3 @@
-import org.gradle.kotlin.dsl.accessors.runtime.addDependencyTo
-import org.jetbrains.kotlin.konan.properties.Properties
-
-repositories {
-    mavenLocal()
-}
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -19,23 +12,16 @@ version = libVersion
 
 repositories {
     mavenLocal()
-//    maven {
-//        name = "Strapp Github Packages"
-//        url = uri("https://maven.pkg.github.com/strapp-au/paparazzi")
-//        credentials {
-//            username = "brenpearson"//findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-//            password = "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"//findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-//        }
-//    }
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 33
     defaultConfig {
         minSdk = 22
-        targetSdk = 31
+        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["useTestStorageService"] = "true"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -63,8 +49,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.6.10"
-        kotlinCompilerExtensionVersion = "1.1.0-rc03"
+        kotlinCompilerExtensionVersion = "1.3.0"
     }
 }
 
@@ -84,65 +69,28 @@ afterEvaluate {
                 from(components["debug"])
             }
         }
-        // note repositories goes under publishing
-        repositories {
-            maven {
-//                url = "file://$projectDir/deploy"
-            }
-        }
     }
-//    publishing {
-//        repositories {
-//            maven {
-//                name = "GitHubPackages"
-//                url = uri("https://maven.pkg.github.com/strapp-au/strapp-ui")
-//                credentials {
-//                    username = getLocalProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-//                    password = getLocalProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-//                }
-//            }
-//        }
-//        publications {
-//            register<MavenPublication>("release") {
-//                from(components["release"])
-//            }
-//        }
-//    }
 }
-
-//fun getLocalProperty(prop: String): String {
-//    val properties = Properties()
-//    properties.load(File(rootDir.absolutePath + "/local.properties").inputStream())
-//    return properties.getProperty(prop, "")
-//}
 
 dependencies {
     implementation(project(":shared"))
 
-//    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.jar"))))
-
     implementation("com.google.code.gson:gson:2.9.0")
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.10")
     implementation("androidx.savedstate:savedstate-ktx:1.1.0")
     implementation("androidx.test:rules:1.4.0")
-//    implementation(project(":core")) {
-//        exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
-//    }
-//    implementation("androidx.appcompat:appcompat:1.4.0")
 
-    val kotlin_version = "1.6.10"
-
-    implementation("androidx.core:core-ktx:1.3.2")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation(kotlin("test-junit"))
     implementation("junit:junit:4.13.2")
     kaptTest("androidx.databinding:databinding-compiler:7.2.0")
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation("androidx.test.ext:junit:1.1.3")
+    implementation("androidx.test.espresso:espresso-core:3.4.0")
 
-    val compose_version = "1.3.0-alpha01"
-    testImplementation("androidx.test:core:1.4.0")
+    val compose_version = "1.3.0"
+    implementation("androidx.test:core:1.5.0")
     implementation("androidx.compose.ui:ui:$compose_version")
     // Tooling  support (Previews, etc.)
     implementation("androidx.compose.ui:ui-tooling:$compose_version")
@@ -156,10 +104,5 @@ dependencies {
     // UI Tests
     implementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     implementation("androidx.compose.ui:ui-test-manifest:$compose_version")
-
-    implementation("app.cash.paparazzi:paparazzi:1.0.0")
-    implementation("app.cash.paparazzi:paparazzi-agent:1.0.0")
-
-
 
 }

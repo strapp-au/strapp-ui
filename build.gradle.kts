@@ -1,4 +1,5 @@
 buildscript {
+    val compose_version by extra("1.3.0")
     repositories {
         mavenLocal()
         gradlePluginPortal()
@@ -13,16 +14,16 @@ buildscript {
         maven(url = "https://www.jetbrains.com/intellij-repository/releases")
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("com.android.tools.build:gradle:7.0.4")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+        classpath("com.android.tools.build:gradle:7.3.1")
     }
 }
 
 allprojects {
 
     ext {
-        set("kotlin_version", "1.6.10")
-        set("strapp_version", "22.9.3")
+        set("kotlin_version", "1.7.10")
+        set("strapp_version", "22.12.0")
     }
 
     repositories {
