@@ -2,7 +2,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("au.strapp.strapp-ui").version("22.12.1")
+    id("au.strapp.strapp-ui").version("22.12.2")
 }
 
 android {
